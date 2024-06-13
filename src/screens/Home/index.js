@@ -15,6 +15,27 @@ const Home = ({ navigation }) => {
         limit: 10,
     });
 
+    const checkRole = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/auth/check-role`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            const { role } = res.data.data.data
+            return role
+
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.response.data.message || 'Something went wrong'
+            });
+        }
+    }
+
     const getWorker = async () => {
         try {
             const res = await axios.get(
@@ -41,10 +62,10 @@ const Home = ({ navigation }) => {
         }
     };
 
-    const getProfile = async () => {
+    const getMyProfile = async (type) => {
         try {
             const token = await AsyncStorage.getItem('token')
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/workers/profile`, {
+            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/${type}/profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -60,7 +81,16 @@ const Home = ({ navigation }) => {
     }
 
     useEffect(() => {
-        getProfile();
+        const fetchRoleAndProfile = async () => {
+            const role = await checkRole();
+            if (role === 'recruiter') {
+                await getMyProfile('recruiters');
+            } else {
+                await getMyProfile('workers');
+            }
+        };
+
+        fetchRoleAndProfile();
         getWorker();
     }, [params]);
 

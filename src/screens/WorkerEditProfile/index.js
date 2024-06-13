@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     width: '100%',
-    alignItems: 'left',
+    alignItems: 'center',
     marginVertical: 20,
     gap: 12
   },

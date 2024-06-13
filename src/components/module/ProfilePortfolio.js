@@ -120,7 +120,7 @@ const ProfilePortfolio = () => {
         getMyPortfolio()
     }, [])
 
-    const handleChageImage = async () => {
+    const handleChangeImage = async () => {
         try {
             const res = await launchImageLibrary(null);
 
@@ -199,7 +199,7 @@ const ProfilePortfolio = () => {
 
                 <View>
                     <Text style={{ fontSize: 12, color: '#9EA0A5', paddingLeft: 5, marginBottom: 5, }}>Upload gambar</Text>
-                    <TouchableOpacity onPress={handleChageImage} style={{ padding: 30, alignItems: 'center', gap: 20, borderWidth: 1, borderRadius: 8, borderColor: '#9EA0A5' }}>
+                    <TouchableOpacity onPress={handleChangeImage} style={{ padding: 30, alignItems: 'center', gap: 20, borderWidth: 1, borderRadius: 8, borderColor: '#9EA0A5' }}>
                         {portfolioForm.image ? (
                             <Image source={{ uri: portfolioForm.image }} style={{width: '100%', height: 200, borderRadius: 8, resizeMode: 'cover',}} />
                         ) : (

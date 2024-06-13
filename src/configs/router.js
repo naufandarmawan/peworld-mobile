@@ -51,7 +51,7 @@ const HomeStack = () => {
 
 const ProfileStack = () => {
     return (
-        <stack.Navigator initialRouteName='worker-edit-profile' screenOptions={{
+        <stack.Navigator initialRouteName='recruiter-profile' screenOptions={{
             headerShown: false,
         }}>
             <stack.Screen name='worker-profile' component={WorkerProfile} />
@@ -69,7 +69,6 @@ const MainRouter = () => {
             <stack.Navigator initialRouteName='main-tab' screenOptions={{
                 headerShown: false,
             }}>
-                <stack.Screen name='splash-screen' component={OptionLogin} />
                 <stack.Screen name='option-login' component={OptionLogin} />
                 <stack.Screen name='worker-login' component={WorkerLogin} />
                 <stack.Screen name='recruiter-login' component={RecruiterLogin} />

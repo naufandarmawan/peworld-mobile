@@ -5,32 +5,69 @@ import IcInbox from '../../assets/icons/icInbox.svg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import Toast from 'react-native-toast-message';
 
 const MyTabBar = ({ state, descriptors, navigation }) => {
     const [myProfile, setMyProfile] = useState({})
 
-    const getProfile = async () => {
+    const checkRole = async () => {
         try {
             const token = await AsyncStorage.getItem('token')
-            const response = await axios.get(`https://fwm17-be-peword.vercel.app/v1/workers/profile`, {
+            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/auth/check-role`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
 
-            if (response.data.message && res.data.message.includes('expired')) {
-                navigation.navigate('worker-login')
-            }
+            const { role } = res.data.data.data
+            return role
+
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.response.data.message || 'Something went wrong'
+            });
+        }
+    }
+
+    const getMyProfile = async (type) => {
+        try {
+            const token = await AsyncStorage.getItem('token')
+            const response = await axios.get(`https://fwm17-be-peword.vercel.app/v1/${type}/profile`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
 
             setMyProfile(response.data.data)
         } catch (error) {
-            console.error('Error fetching data:', error);
+            if (error.response.data.message && error.response.data.message.includes('expired')) {
+                navigation.navigate('option-login')
+            }
+
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.response.data.message || 'Something went wrong'
+            });
+
         }
     }
 
     useEffect(() => {
-        getProfile();
+        const fetchRoleAndProfile = async () => {
+            const role = await checkRole();
+            if (role === 'recruiter') {
+                await getMyProfile('recruiters');
+            } else {
+                await getMyProfile('workers');
+            }
+        };
+
+        fetchRoleAndProfile();
+        
     }, []);
 
     return (
@@ -105,6 +142,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                     </TouchableOpacity>
                 );
             })}
+            <Toast />
         </View>
     );
 }

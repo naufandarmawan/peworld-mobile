@@ -10,6 +10,7 @@ const Input = ({ type = 'text', label = "Label", placeholder = 'Placeholder', st
                 {...props}
                 style={[styles.input, style]}
                 placeholder={placeholder}
+                autoCapitalize="none"
             />
         </View>
     );

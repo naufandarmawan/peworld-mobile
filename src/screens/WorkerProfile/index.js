@@ -246,19 +246,19 @@ const WorkerProfile = ({ route, navigation }) => {
             }
             {profile.instagram &&
               <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                <GreyMail />
+                <GreyInstagram />
                 <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.instagram}</Text>
               </View>
             }
             {profile.github &&
               <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                <GreyMail />
+                <GreyGithub />
                 <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.github}</Text>
               </View>
             }
             {profile.gitlab &&
               <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                <GreyMail />
+                <GreyGitlab />
                 <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.gitlab}</Text>
               </View>
             }
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     width: '100%',
-    alignItems: 'left',
+    alignItems: 'center',
     marginVertical: 20,
     gap: 12
   },
@@ -370,6 +370,7 @@ const styles = StyleSheet.create({
   },
   socialContainer: {
     marginBottom: 34,
+    gap:24
   },
   profileTabContainer: {
     backgroundColor: '#FFFFFF',
