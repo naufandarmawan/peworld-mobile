@@ -10,6 +10,7 @@ const Search = ({ navigation }) => {
     page: 1,
     limit: 10,
     search: '',
+    sort: '',
   });
 
   const [searchInput, setSearchInput] = useState('');
@@ -24,7 +25,6 @@ const Search = ({ navigation }) => {
           page: params.page,
           ...(params.search ? { search: params.search } : {}),
           ...(params.sort ? { sort: params.sort } : {}),
-          sortBy: params.sortBy,
         },
       });
 
@@ -48,6 +48,7 @@ const Search = ({ navigation }) => {
 
   useEffect(() => {
     getWorker();
+    
   }, [params]);
 
   const renderLoader = () => {
@@ -65,6 +66,8 @@ const Search = ({ navigation }) => {
     setWorker([]); // Clear the worker state to reset the list
     setParams({ ...params, search: searchInput, sort: selectedSort, page: 1 });
   };
+
+  console.log(params);
 
   return (
     <SafeAreaView style={styles.container}>

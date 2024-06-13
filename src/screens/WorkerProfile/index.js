@@ -10,6 +10,7 @@ import GreyInstagram from '../../assets/grey-instagram.svg'
 import GreyGithub from '../../assets/grey-github.svg'
 import GreyGitlab from '../../assets/grey-gitlab.svg'
 
+
 const WorkerProfile = ({ route, navigation }) => {
   // const { id } = route.params
 

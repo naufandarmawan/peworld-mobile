@@ -18,6 +18,11 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                     'Authorization': `Bearer ${token}`,
                 },
             });
+
+            if (response.data.message && res.data.message.includes('expired')) {
+                navigation.navigate('worker-login')
+            }
+
             setMyProfile(response.data.data)
         } catch (error) {
             console.error('Error fetching data:', error);

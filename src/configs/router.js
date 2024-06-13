@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from '../screens/Home'
 import OptionLogin from '../screens/OptionLogin';
-import WorkerLogin from '../screens/Login';
+import WorkerLogin from '../screens/WorkerLogin';
 import WorkerRegister from '../screens/WorkerRegister';
 import RecruiterLogin from '../screens/RecruiterLogin';
 import RecruiterRegister from '../screens/RecruiterRegister';
@@ -25,7 +25,7 @@ const stack = createNativeStackNavigator()
 
 const MainTab = () => {
     return (
-        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home' screenOptions={{
+        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Profile' screenOptions={{
             headerShown: false,
         }}>
             <Tab.Screen name="Home" component={HomeStack} />
@@ -51,7 +51,7 @@ const HomeStack = () => {
 
 const ProfileStack = () => {
     return (
-        <stack.Navigator initialRouteName='worker-profile' screenOptions={{
+        <stack.Navigator initialRouteName='worker-edit-profile' screenOptions={{
             headerShown: false,
         }}>
             <stack.Screen name='worker-profile' component={WorkerProfile} />
@@ -66,10 +66,13 @@ const ProfileStack = () => {
 const MainRouter = () => {
     return (
         <NavigationContainer>
-            <stack.Navigator initialRouteName='login' screenOptions={{
+            <stack.Navigator initialRouteName='main-tab' screenOptions={{
                 headerShown: false,
             }}>
-                <stack.Screen name='login' component={WorkerLogin} />
+                <stack.Screen name='splash-screen' component={OptionLogin} />
+                <stack.Screen name='option-login' component={OptionLogin} />
+                <stack.Screen name='worker-login' component={WorkerLogin} />
+                <stack.Screen name='recruiter-login' component={RecruiterLogin} />
                 <stack.Screen name='worker-register' component={WorkerRegister} />
                 <stack.Screen name='recruiter-register' component={RecruiterRegister} />
 

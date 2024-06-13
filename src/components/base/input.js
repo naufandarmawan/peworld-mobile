@@ -20,8 +20,6 @@ export default Input;
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        width: '100%',
-        marginBottom: 10,
     },
     label: {
         fontSize: 12,

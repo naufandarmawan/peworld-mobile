@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message';
 import PurpleLogo from '../../assets/purple-logo.svg'
 
 
-const Login = ({ navigation }) => {
+const WorkerLogin = ({ navigation }) => {
   const [form, setForm] = useState({
     email: '',
     password: ''
@@ -82,7 +82,7 @@ const Login = ({ navigation }) => {
   )
 }
 
-export default Login
+export default WorkerLogin
 
 const styles = StyleSheet.create({
   container: {
