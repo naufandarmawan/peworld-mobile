@@ -17,6 +17,16 @@ const RecruiterLogin = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
+
+      if (!form.email || !form.password) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Email dan password harus diisi',
+        });
+        return;
+      }
+
       const res = await axios.post(
         `https://fwm17-be-peword.vercel.app/v1/auth/login`,
         form,

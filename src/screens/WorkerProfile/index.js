@@ -12,23 +12,18 @@ import GreyGitlab from '../../assets/grey-gitlab.svg'
 
 
 const WorkerProfile = ({ route, navigation }) => {
-  // const { id } = route.params
+  const { id } = route.params
 
   const [profile, setProfile] = useState({})
   const [skills, setSkills] = useState([])
-  const [myProfile, setMyProfile] = useState({})
-  const [mySkills, setMySkills] = useState([])
+  const [portfolio, setPortfolio] = useState([]);
+  const [experience, setExperience] = useState([]);
 
   const [toggle, setToggle] = useState(1);
 
-  const [portfolio, setPortfolio] = useState([]);
-  const [experience, setExperience] = useState([]);
-  const [myPortfolio, setMyPortfolio] = useState([]);
-  const [myExperience, setMyExperience] = useState([]);
-
   const getProfile = async () => {
     try {
-      const { id } = route.params
+      // const { id } = route.params
 
       const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/workers/${id}`);
 
@@ -42,29 +37,9 @@ const WorkerProfile = ({ route, navigation }) => {
     }
   }
 
-  const getMyProfile = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token')
-
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/workers/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      setMyProfile(res.data.data)
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
   const getSkills = async () => {
     try {
-      const { id } = route.params
+      // const { id } = route.params
 
       const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/skills/${id}`);
 
@@ -78,17 +53,29 @@ const WorkerProfile = ({ route, navigation }) => {
     }
   }
 
-  const getMySkills = async () => {
+  const getExperience = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
+      // const { id } = route.params
 
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/skills/`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/experience/${id}`);
+
+      setExperience(res.data.data)
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message || 'Something went wrong'
       });
+    }
+  }
 
-      setMySkills(res.data.data)
+  const getPortfolio = async () => {
+    try {
+      // const { id } = route.params
+
+      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/portfolio/${id}`);
+
+      setPortfolio(res.data.data)
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -106,102 +93,12 @@ const WorkerProfile = ({ route, navigation }) => {
     Linking.openURL(link);
   };
 
-  const getExperience = async () => {
-    try {
-      const { id } = route.params
-
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/experience/${id}`);
-
-      setExperience(res.data.data)
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
-  const getMyExperience = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token')
-
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/experience`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      setMyExperience(res.data.data)
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
-  const getPortfolio = async () => {
-    try {
-      const { id } = route.params
-
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/portfolio/${id}`);
-
-      setPortfolio(res.data.data)
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
-  const getMyPortfolio = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token')
-
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/portfolio/`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      setMyPortfolio(res.data.data)
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
-
   useEffect(() => {
-
-    if (route.params && route.params.id) {
-      getProfile();
-      getSkills();
-      getPortfolio()
-      getExperience()
-    }
-
-    getMyProfile();
-    getMySkills();
-    getMyPortfolio()
-    getMyExperience()
+    getProfile();
+    getSkills();
+    getPortfolio()
+    getExperience()
   }, [])
-
-  useEffect(() => {
-    if (!profile.id || myProfile.id === profile.id) {
-      setProfile(myProfile);
-      setSkills(mySkills);
-      setPortfolio(myPortfolio)
-      setExperience(myExperience)
-    }
-  }, [profile, myProfile, skills, mySkills, portfolio, myPortfolio, experience, myExperience]);
 
   return (
     <ScrollView style={styles.container}>
@@ -220,16 +117,14 @@ const WorkerProfile = ({ route, navigation }) => {
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.description}</Text>
             </View>
 
-            {!profile.id || profile.id === myProfile.id
-              ? <Button variant='primary-yellow' style={styles.button} onPress={() => navigation.navigate('worker-edit-profile')} text='Edit' />
-              : <Button variant='primary-purple' style={styles.button} onPress={() => navigation.navigate('')} text='Hire' />}
+            <Button variant='primary-purple' style={styles.button} onPress={() => navigation.navigate('')} text='Hire' />
           </View>
 
           <View style={styles.skillsContainer}>
             <Text style={styles.skillsTitle}>Skill</Text>
             <View style={styles.skillsList}>
               {skills.map((item) => (
-                <View key={item.id} style={{ paddingHorizontal: 12, paddingVertical: 4, backgroundColor: '#FDD074', borderColor: '#FBB017', borderWidth:1, borderRadius:4 }}>
+                <View key={item.id} style={{ paddingHorizontal: 12, paddingVertical: 4, backgroundColor: '#FDD074', borderColor: '#FBB017', borderWidth: 1, borderRadius: 4 }}>
                   <Text style={{ fontWeight: 600, fontSize: 12, color: '#FFFFFF' }}>{item.skill_name}</Text>
                 </View>
               ))}
@@ -370,7 +265,7 @@ const styles = StyleSheet.create({
   },
   socialContainer: {
     marginBottom: 34,
-    gap:24
+    gap: 24
   },
   profileTabContainer: {
     backgroundColor: '#FFFFFF',

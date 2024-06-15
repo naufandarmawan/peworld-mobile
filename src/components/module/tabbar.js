@@ -5,7 +5,6 @@ import IcInbox from '../../assets/icons/icInbox.svg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Toast from 'react-native-toast-message';
 
 const MyTabBar = ({ state, descriptors, navigation }) => {
     const [myProfile, setMyProfile] = useState({})
@@ -23,11 +22,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
             return role
 
         } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: error.response.data.message || 'Something went wrong'
-            });
+            console.log(error?.response.data);
         }
     }
 
@@ -47,11 +42,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                 navigation.navigate('option-login')
             }
 
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: error.response.data.message || 'Something went wrong'
-            });
+            console.log(error?.response.data);
 
         }
     }
@@ -142,7 +133,6 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                     </TouchableOpacity>
                 );
             })}
-            <Toast />
         </View>
     );
 }

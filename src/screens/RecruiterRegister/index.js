@@ -21,6 +21,17 @@ const RecruiterRegister = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
+      const { email, password, name, company, position, phone } = form;
+
+      if (!email || !password || !name || !company || !position || !phone) {
+        Toast.show({
+          type: 'error',
+          text1: 'Validation Error',
+          text2: 'All fields are required'
+        });
+        return;
+      }
+
       const res = await axios.post(
         `https://fwm17-be-peword.vercel.app/v1/workers/register`,
         form,

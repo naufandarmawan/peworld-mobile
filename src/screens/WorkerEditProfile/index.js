@@ -26,8 +26,6 @@ const WorkerEditProfile = ({ navigation }) => {
 
   const [myProfile, setMyProfile] = useState({})
   const [mySkills, setMySkills] = useState([])
-  const [myPortfolio, setMyPortfolio] = useState([]);
-  const [myExperience, setMyExperience] = useState([]);
 
   const getMyProfile = async () => {
     try {
@@ -167,7 +165,7 @@ const WorkerEditProfile = ({ navigation }) => {
     }
   }
 
-  const handleChangeImage = async () => {
+  const handleChangeLibrary = async () => {
     try {
       const res = await launchImageLibrary(null);
 
@@ -176,7 +174,28 @@ const WorkerEditProfile = ({ navigation }) => {
       }
 
       const data = res.assets[0];
-      console.log(data);
+
+      const maxFileSize = 5 * 1024 * 1024;
+
+      const mediaTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+      if (data.fileSize > maxFileSize) {
+        Toast.show({
+          type: 'error',
+          text1: 'File too large',
+          text2: 'Please select a file smaller than 5 MB.'
+        });
+        return;
+      }
+
+      if (!mediaTypes.includes(data.type)) {
+        Toast.show({
+          type: 'error',
+          text1: 'Invalid file type',
+          text2: 'Please select a valid image file (JPEG, PNG).'
+        });
+        return;
+      }
 
       const formData = new FormData();
 
@@ -186,14 +205,8 @@ const WorkerEditProfile = ({ navigation }) => {
         filename: data.fileName,
         type: data.type,
       };
-      console.log(dataImage);
 
-      formData.append('photo', {
-        uri: data.uri,
-        name: data.fileName,
-        filename: data.fileName,
-        type: data.type,
-      });
+      formData.append('photo', dataImage);
 
       const result = await axios.put(
         'https://fwm17-be-peword.vercel.app/v1/workers/profile/photo',
@@ -204,6 +217,78 @@ const WorkerEditProfile = ({ navigation }) => {
           },
         },
       );
+
+      Toast.show({
+        type: 'success',
+        text1: result.data.status,
+        text2: result.data.message
+      });
+
+      getMyProfile()
+
+    } catch (error) {
+      console.log(error?.response.data);
+    }
+  };
+
+  const handleChangeCamera = async () => {
+    try {
+      const res = await launchCamera(null);
+
+      if (res.didCancel) {
+        return;
+      }
+
+      const data = res.assets[0];
+
+      const maxFileSize = 5 * 1024 * 1024;
+
+      const mediaTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+      if (data.fileSize > maxFileSize) {
+        Toast.show({
+          type: 'error',
+          text1: 'File too large',
+          text2: 'Please select a file smaller than 5 MB.'
+        });
+        return;
+      }
+
+      if (!mediaTypes.includes(data.type)) {
+        Toast.show({
+          type: 'error',
+          text1: 'Invalid file type',
+          text2: 'Please select a valid image file (JPEG, PNG).'
+        });
+        return;
+      }
+
+      const formData = new FormData();
+
+      const dataImage = {
+        uri: data.uri,
+        name: data.fileName,
+        filename: data.fileName,
+        type: data.type,
+      };
+
+      formData.append('photo', dataImage);
+
+      const result = await axios.put(
+        'https://fwm17-be-peword.vercel.app/v1/workers/profile/photo',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      Toast.show({
+        type: 'success',
+        text1: result.data.status,
+        text2: result.data.message
+      });
 
       getMyProfile()
 
@@ -223,9 +308,14 @@ const WorkerEditProfile = ({ navigation }) => {
         <View style={styles.profileContainer}>
           <View style={styles.profileDetails}>
             <Image source={{ uri: `${myProfile.photo}` }} style={styles.profileImage} />
-            <TouchableOpacity onPress={handleChangeImage}>
-              <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Edit</Text>
-            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', gap: 20 }}>
+              <TouchableOpacity onPress={handleChangeLibrary}>
+                <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Open Gallery</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleChangeCamera}>
+                <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Open Camera</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.profileText}>
               <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>{myProfile.name}</Text>
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.job_desk}</Text>
