@@ -9,41 +9,34 @@ import GreyPin from '../../assets/grey-pin.svg'
 import ProfileExperience from '../../components/module/ProfileExperience'
 import ProfilePortfolio from '../../components/module/ProfilePortfolio'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-
+import api from '../../configs/api'
 
 
 const WorkerEditProfile = ({ navigation }) => {
   const [form, setForm] = useState({
     name: '',
-    job_desk: '',
-    domicile: '',
+    position: '',
+    location: '',
     workplace: '',
     description: '',
     photo: '',
   });
 
-  const [skillForm, setSkillForm] = useState('')
-
   const [myProfile, setMyProfile] = useState({})
-  const [mySkills, setMySkills] = useState([])
 
   const getMyProfile = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
 
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/workers/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const res = await api.get(`/workers/profile/`);
 
       const profileData = res.data.data
 
       setMyProfile(profileData)
+
       setForm({
         name: profileData.name || '',
-        job_desk: profileData.job_desk || '',
-        domicile: profileData.domicile || '',
+        position: profileData.position || '',
+        location: profileData.location || '',
         workplace: profileData.workplace || '',
         description: profileData.description || '',
         photo: profileData.photo || '',
@@ -57,41 +50,16 @@ const WorkerEditProfile = ({ navigation }) => {
     }
   }
 
-  const getMySkills = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token')
-
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/skills/`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      setMySkills(res.data.data)
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
   const handleSave = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
 
-      const res = await axios.put(`https://fwm17-be-peword.vercel.app/v1/workers/profile`, {
-        name: form.name,
-        job_desk: form.job_desk,
-        domicile: form.domicile,
-        workplace: form.workplace,
-        description: form.description,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const res = await api.put(`workers/profile`, {
+          name: form.name,
+          position: form.position,
+          location: form.location,
+          workplace: form.workplace,
+          description: form.description,
+        })
 
       Toast.show({
         type: 'success',
@@ -99,62 +67,7 @@ const WorkerEditProfile = ({ navigation }) => {
         text2: res.data.message
       });
 
-      navigation.navigate('worker-profile')
-
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
-  const handleAddSkill = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token')
-
-      const res = await axios.post(`https://fwm17-be-peword.vercel.app/v1/skills`, { skill_name: skillForm }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      Toast.show({
-        type: 'success',
-        text1: res.data.status,
-        text2: res.data.message
-      });
-
-      setSkillForm('')
-      getMySkills()
-
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message || 'Something went wrong'
-      });
-    }
-  }
-
-  const handleDeleteSkill = async (id) => {
-    try {
-      const token = await AsyncStorage.getItem('token')
-
-      const res = await axios.delete(`https://fwm17-be-peword.vercel.app/v1/skills/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      Toast.show({
-        type: 'success',
-        text1: res.data.status,
-        text2: res.data.message
-      });
-
-      getMySkills()
+      navigation.navigate('my-worker-profile')
 
     } catch (error) {
       Toast.show({
@@ -206,10 +119,10 @@ const WorkerEditProfile = ({ navigation }) => {
         type: data.type,
       };
 
-      formData.append('photo', dataImage);
+      formData.append('file', dataImage);
 
-      const result = await axios.put(
-        'https://fwm17-be-peword.vercel.app/v1/workers/profile/photo',
+      const result = await api.put(
+        `/workers/profile/photo`,
         formData,
         {
           headers: {
@@ -272,10 +185,10 @@ const WorkerEditProfile = ({ navigation }) => {
         type: data.type,
       };
 
-      formData.append('photo', dataImage);
+      formData.append('file', dataImage);
 
-      const result = await axios.put(
-        'https://fwm17-be-peword.vercel.app/v1/workers/profile/photo',
+      const result = await api.put(
+        `/workers/profile/photo`,
         formData,
         {
           headers: {
@@ -299,7 +212,6 @@ const WorkerEditProfile = ({ navigation }) => {
 
   useEffect(() => {
     getMyProfile();
-    getMySkills();
   }, [])
 
   return (
@@ -318,10 +230,10 @@ const WorkerEditProfile = ({ navigation }) => {
             </View>
             <View style={styles.profileText}>
               <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>{myProfile.name}</Text>
-              <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.job_desk}</Text>
+              <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.position}</Text>
               <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                 <GreyPin />
-                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.domicile}</Text>
+                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.location}</Text>
               </View>
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.workplace}</Text>
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.description}</Text>
@@ -331,7 +243,7 @@ const WorkerEditProfile = ({ navigation }) => {
 
         <View style={{ gap: 20 }}>
           <Button variant='primary-purple' style={styles.button} onPress={handleSave} text='Simpan' />
-          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('worker-profile')} text='Batal' />
+          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('my-worker-profile')} text='Batal' />
         </View>
 
         <View style={styles.profileTabContainer}>
@@ -344,14 +256,14 @@ const WorkerEditProfile = ({ navigation }) => {
               placeholder="Masukan nama lengkap"
             />
             <Input
-              value={form.job_desk}
-              onChangeText={value => setForm({ ...form, job_desk: value })}
+              value={form.position}
+              onChangeText={value => setForm({ ...form, position: value })}
               label="Job title"
               placeholder="Masukan job title"
             />
             <Input
-              value={form.domicile}
-              onChangeText={value => setForm({ ...form, domicile: value })}
+              value={form.location}
+              onChangeText={value => setForm({ ...form, location: value })}
               label="Domisili"
               placeholder="Masukan domisili"
             />
@@ -370,50 +282,7 @@ const WorkerEditProfile = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={styles.profileTabContainer}>
-          <Text style={styles.skillsTitle}>Skill</Text>
-          <View style={{ gap: 10 }}>
-            <Input label='' placeholder='Masukkan skill' value={skillForm} onChangeText={(value) => setSkillForm(value)} />
-            <Button variant='primary-yellow' text="Tambah" onPress={handleAddSkill} />
-            <View style={{ flexDirection: 'column', gap: 10 }}>
-              {mySkills.map((item) => (
-                <View
-                  key={item.id}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      paddingHorizontal: 12,
-                      paddingVertical: 4,
-                      backgroundColor: '#FDD074',
-                      borderColor: '#FBB017',
-                      borderWidth: 1,
-                      borderRadius: 4,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: '600',
-                        fontSize: 12,
-                        color: '#FFFFFF',
-                      }}
-                    >
-                      {item.skill_name}
-                    </Text>
-                  </View>
-                  <TouchableOpacity onPress={() => handleDeleteSkill(item.id)}>
-                    <Text style={{ color: 'red' }}>X</Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </View>
-          </View>
-
-        </View>
+        {/* <ProfileSkill /> */}
 
         <ProfileExperience />
 

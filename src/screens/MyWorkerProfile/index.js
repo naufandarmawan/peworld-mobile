@@ -9,6 +9,8 @@ import GreyMail from '../../assets/grey-mail.svg'
 import GreyInstagram from '../../assets/grey-instagram.svg'
 import GreyGithub from '../../assets/grey-github.svg'
 import GreyGitlab from '../../assets/grey-gitlab.svg'
+import api from '../../configs/api'
+
 
 const MyWorkerProfile = ({ route, navigation }) => {
 
@@ -21,13 +23,8 @@ const MyWorkerProfile = ({ route, navigation }) => {
 
     const getMyProfile = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/workers/profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/workers/profile/`);
 
             setProfile(res.data.data)
         } catch (error) {
@@ -41,13 +38,8 @@ const MyWorkerProfile = ({ route, navigation }) => {
 
     const getMySkills = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/skills/`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/skill/`);
 
             setSkills(res.data.data)
         } catch (error) {
@@ -61,13 +53,8 @@ const MyWorkerProfile = ({ route, navigation }) => {
 
     const getMyExperience = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/experience`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/experience/`);
 
             setExperience(res.data.data)
         } catch (error) {
@@ -81,13 +68,8 @@ const MyWorkerProfile = ({ route, navigation }) => {
 
     const getMyPortfolio = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/portfolio/`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/portfolio/`);
 
             setPortfolio(res.data.data)
         } catch (error) {
@@ -107,12 +89,17 @@ const MyWorkerProfile = ({ route, navigation }) => {
         Linking.openURL(link);
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long' };
+        return date.toLocaleDateString('en-US', options);
+    };
+
     const handleLogout = async () => {
         await AsyncStorage.removeItem('accessToken');
         await AsyncStorage.removeItem('refreshToken');
-        navigation.navigate('Home')
+        navigation.navigate('option-login')
     };
-
 
     useEffect(() => {
         getMyProfile()
@@ -123,23 +110,20 @@ const MyWorkerProfile = ({ route, navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
-
             <View style={styles.content}>
-
                 <View style={styles.profileContainer}>
                     <View style={styles.profileDetails}>
                         <Image source={{ uri: `${profile.photo}` }} style={styles.profileImage} />
                         <View style={styles.profileText}>
                             <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>{profile.name}</Text>
-                            <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{profile.job_desk}</Text>
+                            <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{profile.position}</Text>
                             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                                 <GreyPin />
-                                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.domicile}</Text>
+                                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.location}</Text>
                             </View>
                             <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.workplace}</Text>
                             <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.description}</Text>
                         </View>
-
                         <Button variant='primary-yellow' style={styles.button} onPress={() => navigation.navigate('worker-edit-profile')} text='Edit' />
                     </View>
 
@@ -200,7 +184,7 @@ const MyWorkerProfile = ({ route, navigation }) => {
                             <View style={styles.contentContainer}>
                                 <View style={styles.list}>
                                     {portfolio.map((item) => (
-                                        <TouchableOpacity key={item.id} onPress={() => handleNavigate(item.link_repository)}>
+                                        <TouchableOpacity key={item.id} onPress={() => handleNavigate(item.link)}>
                                             <Image source={{ uri: item.image }} style={styles.image} />
                                         </TouchableOpacity>
                                     ))}
@@ -214,13 +198,11 @@ const MyWorkerProfile = ({ route, navigation }) => {
                                     {experience.map((item) => (
                                         <View key={item.id} style={{ flexDirection: 'row', gap: 20 }}>
                                             <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} />
-                                            <View style={{ gap: 6 }}>
+                                            <View style={{ gap: 6, flex: 1 }}>
                                                 <Text style={{ fontWeight: 600, fontSize: 20, color: '#1F2A36' }}>{item.position}</Text>
                                                 <Text style={{ fontWeight: 400, fontSize: 18, color: '#46505C' }}>{item.company}</Text>
-                                                <View style={{ flexDirection: 'row', gap: 4 }}>
-                                                    <Text style={{ fontWeight: 400, fontSize: 16, color: '#9EA0A5' }}>{item.work_month}</Text>
-                                                    <Text style={{ fontWeight: 400, fontSize: 16, color: '#9EA0A5' }}>{item.work_year}</Text>
-                                                </View>
+                                                <Text style={{ fontWeight: 400, fontSize: 16, color: '#9EA0A5' }}>{formatDate(item.start_date)} - {formatDate(item.end_date)}</Text>
+                                                <Text style={{ fontWeight: 400, fontSize: 16, color: '#9EA0A5' }}>{item.duration_in_months} months</Text>
                                                 <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{item.description}</Text>
                                             </View>
                                         </View>
@@ -232,11 +214,9 @@ const MyWorkerProfile = ({ route, navigation }) => {
                 </View>
 
                 <TouchableOpacity onPress={handleLogout}>
-                    <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>Logout</Text>
+                    <Text style={{ marginTop: 20, fontWeight: 600, fontSize: 22, color: '#1F2A36', textAlign:'center' }}>Logout</Text>
                 </TouchableOpacity>
-
             </View>
-
             <Toast />
         </ScrollView>
     )

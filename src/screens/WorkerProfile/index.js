@@ -119,7 +119,6 @@ const WorkerProfile = ({ route, navigation }) => {
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.workplace}</Text>
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{profile.description}</Text>
             </View>
-
             <Button variant='primary-purple' style={styles.button} onPress={() => navigation.navigate('')} text='Hire' />
           </View>
 
