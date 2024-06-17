@@ -10,27 +10,24 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import GreyUpload from '../../assets/grey-upload.svg'
 import GreyImage from '../../assets/grey-image.svg'
 import GreySize from '../../assets/grey-size.svg'
+import api from '../../configs/api'
 
 const ProfilePortfolio = () => {
     const [portfolioForm, setPortfolioForm] = useState({
         id: '',
-        application_name: '',
-        link_repository: '',
-        application: '',
+        name: '',
+        link: '',
+        type: 'Aplikasi Mobile',
         image: '',
     })
+
     const [myPortfolio, setMyPortfolio] = useState([])
-    const [selectedOption, setSelectedOption] = useState('Aplikasi mobile');
+    const [selectedOption, setSelectedOption] = useState('Aplikasi Mobile');
 
     const getMyPortfolio = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/portfolio`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/portfolio`);
 
             setMyPortfolio(res.data.data)
         } catch (error) {
@@ -44,16 +41,11 @@ const ProfilePortfolio = () => {
 
     const addMyPortfolio = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
             if (portfolioForm.id) {
                 const { id, created_at, updated_at, ...updateData } = portfolioForm;
 
-                const res = await axios.put(`https://fwm17-be-peword.vercel.app/v1/portfolio/${portfolioForm.id}`, updateData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
+                const res = await api.put(`/portfolio/${portfolioForm.id}`, updateData);
 
                 Toast.show({
                     type: 'success',
@@ -65,13 +57,12 @@ const ProfilePortfolio = () => {
                 getMyPortfolio()
 
             } else {
+                console.log(portfolioForm);
                 const { id, created_at, updated_at, ...updateData } = portfolioForm
 
-                const res = await axios.post(`https://fwm17-be-peword.vercel.app/v1/portfolio`, updateData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
+                const res = await api.post(`/portfolio`, updateData);
+
+                console.log(res);
 
                 Toast.show({
                     type: 'success',
@@ -84,6 +75,9 @@ const ProfilePortfolio = () => {
             }
 
         } catch (error) {
+            console.log(error);
+            console.log(error.response);
+            console.log(error.response.data);
             Toast.show({
                 type: 'error',
                 text1: 'Error',
@@ -94,13 +88,8 @@ const ProfilePortfolio = () => {
 
     const deleteMyPortfolio = async (id) => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.delete(`https://fwm17-be-peword.vercel.app/v1/portfolio/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.delete(`/portfolio/${id}`);
 
             getMyPortfolio()
         } catch (error) {
@@ -115,10 +104,6 @@ const ProfilePortfolio = () => {
     const handleSelect = (portfolio) => {
         setPortfolioForm(portfolio);
     }
-
-    useEffect(() => {
-        getMyPortfolio()
-    }, [])
 
     const handleChangeImage = async () => {
         try {
@@ -150,8 +135,8 @@ const ProfilePortfolio = () => {
                 type: data.type,
             });
 
-            const result = await axios.post(
-                'https://fwm17-be-peword.vercel.app/v1/upload',
+            const result = await api.post(
+                `/assets/upload`,
                 formData,
                 {
                     headers: {
@@ -160,7 +145,8 @@ const ProfilePortfolio = () => {
                 },
             );
             
-            const image = result.data.data.file_url 
+            const image = result.data.data.file 
+
             setPortfolioForm({ ...portfolioForm, image: image });
 
         } catch (error) {
@@ -168,19 +154,23 @@ const ProfilePortfolio = () => {
         }
     };
 
+    useEffect(() => {
+        getMyPortfolio()
+    }, [])
+
     return (
         <View style={{ backgroundColor: '#FFFFFF', padding: 30, borderRadius: 10, gap: 20 }}>
             <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#1F2A36', marginBottom: 20, }}>Pengalaman Kerja</Text>
             <View style={{ gap: 10 }}>
                 <Input
-                    value={portfolioForm.application_name}
-                    onChangeText={value => setPortfolioForm({ ...portfolioForm, application_name: value })}
+                    value={portfolioForm.name}
+                    onChangeText={value => setPortfolioForm({ ...portfolioForm, name: value })}
                     label="Nama Aplikasi"
                     placeholder="Gojek"
                 />
                 <Input
-                    value={portfolioForm.link_repository}
-                    onChangeText={value => setPortfolioForm({ ...portfolioForm, link_repository: value })}
+                    value={portfolioForm.link}
+                    onChangeText={value => setPortfolioForm({ ...portfolioForm, link: value })}
                     label="Link Repo"
                     placeholder="Github"
                 />
@@ -192,7 +182,7 @@ const ProfilePortfolio = () => {
                         selectedOption={selectedOption}
                         onSelect={option => {
                             setSelectedOption(option);
-                            setPortfolioForm({ ...portfolioForm, application: option });
+                            setPortfolioForm({ ...portfolioForm, type: option });
                         }}
                     />
                 </View>
@@ -226,7 +216,7 @@ const ProfilePortfolio = () => {
             <View style={myPortfolio ? styles.container : styles.hidden}>
                 {myPortfolio.map((item) => (
                     <View key={item.id} style={styles.item}>
-                        <TouchableOpacity key={item.id} onPress={() => handleNavigate(item.link_repository)}>
+                        <TouchableOpacity key={item.id} onPress={() => handleNavigate(item.link)}>
                             <Image source={{ uri: item.image }} style={styles.image} />
                         </TouchableOpacity>
                         <View style={styles.buttonsContainer}>
