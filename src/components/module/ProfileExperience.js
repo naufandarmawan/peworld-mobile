@@ -5,6 +5,7 @@ import Button from '../base/button'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import Toast from 'react-native-toast-message'
+import api from '../../configs/api'
 
 
 const ProfileExperience = () => {
@@ -12,21 +13,16 @@ const ProfileExperience = () => {
         id: '',
         position: '',
         company: '',
-        work_month: '',
-        work_year: '',
+        start_date: '',
+        end_date: '',
         description: '',
     })
     const [myExperience, setMyExperience] = useState([])
 
     const getMyExperience = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/experience`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/experience`);
 
             setMyExperience(res.data.data)
         } catch (error) {
@@ -40,16 +36,11 @@ const ProfileExperience = () => {
 
     const addMyExperience = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
             if (experienceForm.id) {
                 const { id, created_at, updated_at, ...updateData } = experienceForm;
 
-                const res = await axios.put(`https://fwm17-be-peword.vercel.app/v1/experience/${experienceForm.id}`, updateData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
+                const res = await api.put(`/experience/${experienceForm.id}`, updateData);
 
                 Toast.show({
                     type: 'success',
@@ -63,11 +54,7 @@ const ProfileExperience = () => {
             } else {
                 const { id, created_at, updated_at, ...updateData } = experienceForm
 
-                const res = await axios.post(`https://fwm17-be-peword.vercel.app/v1/experience`, updateData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
+                const res = await api.post(`/experience`, updateData);
 
                 Toast.show({
                     type: 'success',
@@ -90,13 +77,8 @@ const ProfileExperience = () => {
 
     const deleteMyExperience = async (id) => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.delete(`https://fwm17-be-peword.vercel.app/v1/experience/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.delete(`/experience/${id}`);
 
             getMyExperience()
         } catch (error) {
@@ -112,11 +94,15 @@ const ProfileExperience = () => {
         setExperienceForm(experience);
     }
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long' };
+        return date.toLocaleDateString('en-US', options);
+    };
+
     useEffect(() => {
         getMyExperience()
     }, [])
-
-   
 
     return (
         <View style={{ backgroundColor: '#FFFFFF', padding: 30, borderRadius: 10, gap: 20 }}>
@@ -126,7 +112,7 @@ const ProfileExperience = () => {
                     value={experienceForm.position}
                     onChangeText={value => setExperienceForm({ ...experienceForm, position: value })}
                     label="Posisi"
-                    placeholder="web developer"
+                    placeholder="Web Developer"
                 />
                 <Input
                     value={experienceForm.company}
@@ -135,16 +121,16 @@ const ProfileExperience = () => {
                     placeholder="PT Harus bisa"
                 />
                 <Input
-                    value={experienceForm.work_month}
-                    onChangeText={value => setExperienceForm({ ...experienceForm, work_month: value })}
-                    label="Bulan"
-                    placeholder="Januari"
+                    value={experienceForm.start_date}
+                    onChangeText={value => setExperienceForm({ ...experienceForm, start_date: value })}
+                    label="Tanggal mulai"
+                    placeholder="2022-01-15"
                 />
                 <Input
-                    value={experienceForm.work_year}
-                    onChangeText={value => setExperienceForm({ ...experienceForm, work_year: value })}
-                    label="Tahun"
-                    placeholder="2018"
+                    value={experienceForm.end_date}
+                    onChangeText={value => setExperienceForm({ ...experienceForm, end_date: value })}
+                    label="Tanggal berakhir"
+                    placeholder="2022-06-30"
                 />
                 <Input
                     value={experienceForm.description}
@@ -158,16 +144,14 @@ const ProfileExperience = () => {
             <View style={myExperience ? styles.container : styles.hidden}>
                 {myExperience.map((item) => (
                     <View key={item.id} style={styles.item}>
-                        <View key={item.id} style={{ flexDirection: 'row', gap: 20 }}>
+                        <View style={{ flexDirection: 'row', gap: 20, flex:1 }}>
                             <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} />
-                            <View style={{ gap: 6 }}>
-                                <Text style={styles.position}>{item.position}</Text>
-                                <Text style={styles.company}>{item.company}</Text>
-                                <View style={{ flexDirection: 'row', gap: 4 }}>
-                                    <Text style={styles.workMonth}>{item.work_month}</Text>
-                                    <Text style={styles.workYear}>{item.work_year}</Text>
-                                </View>
-                                <Text style={styles.description}>{item.description}</Text>
+                            <View style={{ gap: 6, flex: 1 }}>
+                                <Text style={{ fontWeight: 600, fontSize: 20, color: '#1F2A36' }}>{item.position}</Text>
+                                <Text style={{ fontWeight: 400, fontSize: 18, color: '#46505C' }}>{item.company}</Text>
+                                <Text style={{ fontWeight: 400, fontSize: 16, color: '#9EA0A5' }}>{formatDate(item.start_date)} - {formatDate(item.end_date)}</Text>
+                                <Text style={{ fontWeight: 400, fontSize: 16, color: '#9EA0A5' }}>{item.duration_in_months} months</Text>
+                                <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{item.description}</Text>
                             </View>
                         </View>
                         <View style={styles.buttonsContainer}>
@@ -206,7 +190,8 @@ const styles = StyleSheet.create({
     item: {
         justifyContent: 'space-between',
         width: '100%',
-        gap:20
+        gap: 20,
+        flex: 1
     },
     companyLogo: {
         width: 50,
@@ -241,7 +226,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         gap: 8,
         height: 'fit-content',
-        flexDirection:'column',
-        width:'100%'
+        flexDirection: 'column',
+        width: '100%'
     },
 });
