@@ -5,6 +5,7 @@ import Bell from '../../assets/bell.svg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import dayjs from 'dayjs';
+import api from '../../configs/api';
 
 
 const Home = ({ navigation }) => {
@@ -17,14 +18,10 @@ const Home = ({ navigation }) => {
 
     const checkRole = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/auth/check-role`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/auth/checkrole`);
 
-            const { role } = res.data.data.data
+            const { role } = res.data.data[0]
+
             return role
 
         } catch (error) {
@@ -38,13 +35,10 @@ const Home = ({ navigation }) => {
 
     const getWorker = async () => {
         try {
-            const res = await axios.get(
-                `https://fwm17-be-peword.vercel.app/v1/workers/`, {
-                params,
-            }
-            );
+            const res = await api.get(`/workers/`, {params});
 
             const { data } = res.data;
+
             setWorker(current => [...current, ...data])
 
             Toast.show({
@@ -64,13 +58,10 @@ const Home = ({ navigation }) => {
 
     const getMyProfile = async (type) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/${type}/profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/${type}/profile`);
+
             setMyProfile(res.data.data)
+
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -83,7 +74,7 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         const fetchRoleAndProfile = async () => {
             const role = await checkRole();
-            if (role === 'recruiter') {
+            if (role === 'Recruiter') {
                 await getMyProfile('recruiters');
             } else {
                 await getMyProfile('workers');
@@ -95,7 +86,7 @@ const Home = ({ navigation }) => {
     }, [params]);
 
     const renderLoader = () => {
-        return <ActivityIndicator size="large" color="#00ff00" />;
+        return <ActivityIndicator size="large" color="#5E50A1" />;
     };
 
     const loadMoreItem = () => {
@@ -128,7 +119,7 @@ const Home = ({ navigation }) => {
                             {item.photo ? <Image source={{ uri: item.photo }} style={styles.cardImage} /> : <View style={{ width: 60, height: 60, borderRadius: 60, backgroundColor: '#9EA0A5' }} />}
                             <View style={{ gap: 4 }}>
                                 {item.name && <Text style={styles.cardName}>{item.name}</Text>}
-                                {item.job_desk && <Text style={styles.cardJob}>{item.job_desk}</Text>}
+                                {item.position && <Text style={styles.cardJob}>{item.position}</Text>}
                                 {item.skills && <Text style={styles.cardSkills}>{item.skills.join(', ')}</Text>}
                             </View>
                         </TouchableOpacity>

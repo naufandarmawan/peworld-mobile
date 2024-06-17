@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet, ActivityIndi
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import CustomPicker from '../../components/base/picker';
+import api from '../../configs/api';
 
 const Search = ({ navigation }) => {
   const [worker, setWorker] = useState([]);
@@ -11,21 +12,24 @@ const Search = ({ navigation }) => {
     limit: 10,
     search: '',
     sort: '',
+    sortBy: 'DESC'
   });
 
   const [searchInput, setSearchInput] = useState('');
   const [selectedSort, setSelectedSort] = useState('');
+  const [selectedSortBy, setSelectedSortBy] = useState('');
 
   const getWorker = async () => {
     try {
-      const res = await axios.get(
-        `https://fwm17-be-peword.vercel.app/v1/workers/`, {
+
+      const res = await api.get(`/workers/`, {
         params: {
           limit: params.limit,
           page: params.page,
           ...(params.search ? { search: params.search } : {}),
           ...(params.sort ? { sort: params.sort } : {}),
-        },
+          ...(params.sortBy ? { sortBy: params.sortBy } : {})
+        }
       });
 
       const { data } = res.data;
@@ -48,11 +52,11 @@ const Search = ({ navigation }) => {
 
   useEffect(() => {
     getWorker();
-    
+
   }, [params]);
 
   const renderLoader = () => {
-    return <ActivityIndicator size="large" color="#00ff00" />;
+    return <ActivityIndicator size="large" color="#5E50A1" />;
   };
 
   const loadMoreItem = () => {
@@ -66,8 +70,6 @@ const Search = ({ navigation }) => {
     setWorker([]); // Clear the worker state to reset the list
     setParams({ ...params, search: searchInput, sort: selectedSort, page: 1 });
   };
-
-  console.log(params);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -90,6 +92,16 @@ const Search = ({ navigation }) => {
             ]}
             placeholder="Sort"
           />
+          <CustomPicker
+            selectedValue={selectedSortBy}
+            onValueChange={(value) => setSelectedSortBy(value)}
+            items={[
+              { label: 'Sort by', value: '' },
+              { label: 'Sort by ascending', value: 'ASC' },
+              { label: 'Sort by descending', value: 'DESC' },
+            ]}
+            placeholder="Sort by"
+          />
           <TouchableOpacity
             style={styles.searchButton}
             onPress={() => handleSearch}
@@ -105,7 +117,7 @@ const Search = ({ navigation }) => {
               {item.photo ? <Image source={{ uri: item.photo }} style={styles.cardImage} /> : <View style={{ width: 60, height: 60, borderRadius: 60, backgroundColor: '#9EA0A5' }} />}
               <View style={{ gap: 4 }}>
                 {item.name && <Text style={styles.cardName}>{item.name}</Text>}
-                {item.job_desk && <Text style={styles.cardJob}>{item.job_desk}</Text>}
+                {item.position && <Text style={styles.cardJob}>{item.position}</Text>}
                 {item.skills && <Text style={styles.cardSkills}>{item.skills.join(', ')}</Text>}
               </View>
             </TouchableOpacity>

@@ -107,6 +107,12 @@ const MyWorkerProfile = ({ route, navigation }) => {
         Linking.openURL(link);
     };
 
+    const handleLogout = async () => {
+        await AsyncStorage.removeItem('accessToken');
+        await AsyncStorage.removeItem('refreshToken');
+        navigation.navigate('Home')
+    };
+
 
     useEffect(() => {
         getMyProfile()
@@ -117,7 +123,9 @@ const MyWorkerProfile = ({ route, navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
+
             <View style={styles.content}>
+
                 <View style={styles.profileContainer}>
                     <View style={styles.profileDetails}>
                         <Image source={{ uri: `${profile.photo}` }} style={styles.profileImage} />
@@ -222,7 +230,13 @@ const MyWorkerProfile = ({ route, navigation }) => {
                         )}
                     </View>
                 </View>
+
+                <TouchableOpacity onPress={handleLogout}>
+                    <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>Logout</Text>
+                </TouchableOpacity>
+
             </View>
+
             <Toast />
         </ScrollView>
     )

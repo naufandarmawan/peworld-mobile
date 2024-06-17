@@ -32,10 +32,7 @@ const RecruiterRegister = ({ navigation }) => {
         return;
       }
 
-      const res = await axios.post(
-        `https://fwm17-be-peword.vercel.app/v1/workers/register`,
-        form,
-      );
+      const res = await api.post(`/recruiters/register`, form);
 
       Toast.show({
         type: 'success',
@@ -43,7 +40,8 @@ const RecruiterRegister = ({ navigation }) => {
         text2: res.data.message
       });
 
-      navigation.navigate('login');
+      navigation.navigate('recruiter-login');
+
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -101,7 +99,7 @@ const RecruiterRegister = ({ navigation }) => {
             <Button variant='primary-yellow' onPress={handleRegister} text='Daftar' />
             <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
               <Text style={styles.textCenter}>Anda sudah punya akun?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate('login')}>
+              <TouchableOpacity onPress={() => navigation.navigate('recruiter-login')}>
                 <Text style={styles.linkYellow}>Masuk disini</Text>
               </TouchableOpacity>
             </View>

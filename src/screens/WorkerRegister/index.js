@@ -8,6 +8,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import PurpleLogo from '../../assets/purple-logo.svg'
+import api from '../../configs/api';
+
 
 const WorkerRegister = ({ navigation }) => {
   const [form, setForm] = useState({
@@ -30,10 +32,7 @@ const WorkerRegister = ({ navigation }) => {
         return;
       }
 
-      const res = await axios.post(
-        `https://fwm17-be-peword.vercel.app/v1/workers/register`,
-        form,
-      );
+      const res = await api.post(`/workers/register`, form);
 
       Toast.show({
         type: 'success',
@@ -41,7 +40,8 @@ const WorkerRegister = ({ navigation }) => {
         text2: res.data.message
       });
 
-      navigation.navigate('login');
+      navigation.navigate('worker-login');
+
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -88,7 +88,7 @@ const WorkerRegister = ({ navigation }) => {
               <Button variant='primary-yellow' onPress={handleRegister} text='Daftar' />
               <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
                 <Text style={styles.textCenter}>Anda sudah punya akun?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('login')}>
+                <TouchableOpacity onPress={() => navigation.navigate('worker-login')}>
                   <Text style={styles.linkYellow}>Masuk disini</Text>
                 </TouchableOpacity>
               </View>

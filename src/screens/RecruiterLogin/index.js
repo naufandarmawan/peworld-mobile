@@ -8,6 +8,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import PurpleLogo from '../../assets/purple-logo.svg'
+import api from '../../configs/api';
+
 
 const RecruiterLogin = ({ navigation }) => {
   const [form, setForm] = useState({
@@ -27,19 +29,20 @@ const RecruiterLogin = ({ navigation }) => {
         return;
       }
 
-      const res = await axios.post(
-        `https://fwm17-be-peword.vercel.app/v1/auth/login`,
-        form,
-      );
+      const res = await api.post(`/auth/login`, form);
 
       const { data } = res.data;
       await AsyncStorage.setItem('token', data.token);
+      await AsyncStorage.setItem('refreshToken', data.refreshToken);
+      
       navigation.navigate('main-tab');
+
       Toast.show({
         type: 'success',
         text1: res.data.status,
         text2: res.data.message
       });
+
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -48,10 +51,6 @@ const RecruiterLogin = ({ navigation }) => {
       });
     }
   };
-
-  const handleTest = () => {
-    navigation.navigate('option-login')
-  }
 
   return (
     <ScrollView style={styles.container}>
@@ -75,17 +74,17 @@ const RecruiterLogin = ({ navigation }) => {
               />
             </View>
             <View style={styles.actionContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <TouchableOpacity onPress={() => navigation.navigate('request-forgot-password')}>
                 <Text style={styles.link}>Lupa kata sandi?</Text>
               </TouchableOpacity>
               <Button variant='primary-yellow' onPress={handleLogin} text='Masuk' />
-              <Text style={styles.textCenter}>Anda belum punya akun?</Text>
-              <TouchableOpacity onPress={handleTest}>
-                <Text style={styles.linkYellow}>Daftar sebagai talent</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('recruiter-register')}>
-                <Text style={styles.linkYellow}>Daftar sebagai recruiter</Text>
-              </TouchableOpacity>
+              <Button variant='secondary-yellow' onPress={() => navigation.navigate('worker-login')} text='Masuk sebagai Worker' />
+              <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
+                <Text style={styles.textCenter}>Anda belum punya akun?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('worker-register')}>
+                  <Text style={styles.linkYellow}>Daftar sebagai recruiter</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </FormContainer>
         </View>
