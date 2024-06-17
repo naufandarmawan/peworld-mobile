@@ -1,20 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import Button from '../../components/base/button'
+import Input from '../../components/base/input'
+import Toast from 'react-native-toast-message'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import api from '../../configs/api'
 
 const ProfileSkill = () => {
-
     const [skillForm, setSkillForm] = useState('')
     const [mySkills, setMySkills] = useState([])
 
     const getMySkills = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/skills/`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/skill/`);
 
             setMySkills(res.data.data)
         } catch (error) {
@@ -28,13 +28,8 @@ const ProfileSkill = () => {
 
     const handleAddSkill = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.post(`https://fwm17-be-peword.vercel.app/v1/skills`, { skill_name: skillForm }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.post(`/skill`, { skill_name: skillForm });
 
             Toast.show({
                 type: 'success',
@@ -56,13 +51,8 @@ const ProfileSkill = () => {
 
     const handleDeleteSkill = async (id) => {
         try {
-            const token = await AsyncStorage.getItem('token')
 
-            const res = await axios.delete(`https://fwm17-be-peword.vercel.app/v1/skills/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.delete(`/skill/${id}`);
 
             Toast.show({
                 type: 'success',
@@ -82,7 +72,7 @@ const ProfileSkill = () => {
     }
 
     useEffect(() => {
-        getMySkill()
+        getMySkills()
     }, [])
 
     return (

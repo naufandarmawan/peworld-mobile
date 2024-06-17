@@ -6,10 +6,12 @@ import Input from '../../components/base/input'
 import Toast from 'react-native-toast-message'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import GreyPin from '../../assets/grey-pin.svg'
+import ProfileSkill from '../../components/module/ProfileSkill'
 import ProfileExperience from '../../components/module/ProfileExperience'
 import ProfilePortfolio from '../../components/module/ProfilePortfolio'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import api from '../../configs/api'
+
 
 
 const WorkerEditProfile = ({ navigation }) => {
@@ -282,7 +284,7 @@ const WorkerEditProfile = ({ navigation }) => {
           </View>
         </View>
 
-        {/* <ProfileSkill /> */}
+        <ProfileSkill />
 
         <ProfileExperience />
 
