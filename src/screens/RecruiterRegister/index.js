@@ -8,6 +8,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import PurpleLogo from '../../assets/purple-logo.svg'
+import api from '../../configs/api';
+
 
 const RecruiterRegister = ({ navigation }) => {
   const [form, setForm] = useState({

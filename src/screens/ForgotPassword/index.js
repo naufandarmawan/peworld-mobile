@@ -54,7 +54,7 @@ const ForgotPassword = ({ navigation }) => {
                 text2: res.data.message
             });
 
-            navigation.navigate('worker-login');
+            navigation.navigate('option-login');
 
         } catch (error) {
             Toast.show({

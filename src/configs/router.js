@@ -20,26 +20,48 @@ import RecruiterProfile from '../screens/RecruiterProfile';
 import RecruiterEditProfile from '../screens/RecruiterEditProfile';
 import SplashScreen from '../screens/SplashScreen';
 import { LogLevel, OneSignal } from 'react-native-onesignal';
-
-import MyTabBar from '../components/module/tabbar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import ForgotPassword from '../screens/ForgotPassword';
 import VerifyForgotPassword from '../screens/VerifyForgotPassword';
 import RequestForgotPassword from '../screens/RequestForgotPassword';
+
+import MyTabBar from '../components/module/TabBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import api from './api';
+
 
 const Tab = createBottomTabNavigator()
 const stack = createNativeStackNavigator()
 
 const MainTab = () => {
+    const [role, setRole] = useState('Worker');
+
+    useEffect(() => {
+        const checkRole = async () => {
+            try {
+                const res = await api.get(`/auth/checkrole`);
+
+                const { role } = res.data.data[0]
+
+                setRole(role)
+
+            } catch (error) {
+                console.error('Failed to check user role:', error);
+                setRole('Worker')
+            }
+        };
+
+        checkRole();
+    }, []);
+
     return (
-        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Profile' screenOptions={{
+        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Search' screenOptions={{
             headerShown: false,
         }}>
             <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name='Search' component={SearchStack} />
             <Tab.Screen name='Inbox' component={Inbox} />
-            <Tab.Screen name='Profile' component={ProfileStack} />
+            <Tab.Screen name='Profile' component={role === 'Recruiter' ? RecruiterProfileStack : WorkerProfileStack} />
 
         </Tab.Navigator>
     )
@@ -68,41 +90,22 @@ const SearchStack = () => {
     )
 }
 
-const ProfileStack = () => {
-    // const [role, setRole] = useState(null);
-
-    // useEffect(() => {
-    //     const checkRole = async () => {
-    //         try {
-    //             const token = await AsyncStorage.getItem('token')
-
-    //             const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/auth/check-role`, {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${token}`,
-    //                 },
-    //             });
-
-    //             const { role } = res.data.data.data
-
-    //             setRole(role)
-
-    //         } catch (error) {
-    //             console.log(error?.response.data);
-    //         }
-    //     }
-
-    //     checkRole();
-    // }, []);
-
+const WorkerProfileStack = () => {
     return (
-        // <stack.Navigator initialRouteName={role === 'recruiter' ? 'recruiter-profile' : 'worker-profile'} screenOptions={{
-        //     headerShown: false,
-        // }}>
         <stack.Navigator initialRouteName='my-worker-profile' screenOptions={{
             headerShown: false,
         }}>
             <stack.Screen name='my-worker-profile' component={MyWorkerProfile} />
             <stack.Screen name='worker-edit-profile' component={WorkerEditProfile} />
+        </stack.Navigator>
+    )
+}
+
+const RecruiterProfileStack = () => {
+    return (
+        <stack.Navigator initialRouteName='recruiter-profile' screenOptions={{
+            headerShown: false,
+        }}>
 
             <stack.Screen name='recruiter-profile' component={RecruiterProfile} />
             <stack.Screen name='recruiter-edit-profile' component={RecruiterEditProfile} />
@@ -117,7 +120,7 @@ const MainRouter = () => {
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
 
     // OneSignal Initialization
-    OneSignal.initialize("81f21d3d-8fe1-4ebb-bad5-eefb4094ddd5");
+    OneSignal.initialize(`${process.env.ONESIGNAL_ID}`);
 
     // requestPermission will show the native iOS or Android notification permission prompt.
     // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
@@ -139,7 +142,7 @@ const MainRouter = () => {
     });
 
     return (
-        <stack.Navigator initialRouteName='main-tab' screenOptions={{
+        <stack.Navigator initialRouteName='splash-screen' screenOptions={{
             headerShown: false,
         }}>
             <stack.Screen name='splash-screen' component={SplashScreen} />

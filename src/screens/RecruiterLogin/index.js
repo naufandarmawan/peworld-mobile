@@ -34,14 +34,14 @@ const RecruiterLogin = ({ navigation }) => {
       const { data } = res.data;
       await AsyncStorage.setItem('token', data.token);
       await AsyncStorage.setItem('refreshToken', data.refreshToken);
-      
-      navigation.navigate('main-tab');
 
       Toast.show({
         type: 'success',
         text1: res.data.status,
         text2: res.data.message
       });
+      
+      navigation.navigate('main-tab');
 
     } catch (error) {
       Toast.show({
@@ -81,7 +81,7 @@ const RecruiterLogin = ({ navigation }) => {
               <Button variant='secondary-yellow' onPress={() => navigation.navigate('worker-login')} text='Masuk sebagai Worker' />
               <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
                 <Text style={styles.textCenter}>Anda belum punya akun?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('worker-register')}>
+                <TouchableOpacity onPress={() => navigation.navigate('recruiter-register')}>
                   <Text style={styles.linkYellow}>Daftar sebagai recruiter</Text>
                 </TouchableOpacity>
               </View>

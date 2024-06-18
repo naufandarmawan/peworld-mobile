@@ -60,6 +60,11 @@ const Home = ({ navigation }) => {
         try {
             const res = await api.get(`/${type}/profile`);
 
+            if (type === 'recruiters') {
+                setMyProfile(res.data.data[0])
+                return
+            }
+
             setMyProfile(res.data.data)
 
         } catch (error) {

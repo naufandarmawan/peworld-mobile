@@ -7,8 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import GreyPin from '../../assets/grey-pin.svg'
 import GreyMail from '../../assets/grey-mail.svg'
 import GreyInstagram from '../../assets/grey-instagram.svg'
-import GreyGithub from '../../assets/grey-github.svg'
-import GreyGitlab from '../../assets/grey-gitlab.svg'
+import GreyPhone from '../../assets/grey-phone.svg'
+import GreyLinkedin from '../../assets/grey-linkedin.svg'
+import api from '../../configs/api'
 
 const RecruiterProfile = ({ navigation }) => {
 
@@ -16,15 +17,11 @@ const RecruiterProfile = ({ navigation }) => {
 
   const getMyProfile = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
 
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/recruiters/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const res = await api.get(`/recruiters/profile`);
 
-      setMyProfile(res.data.data)
+      setMyProfile(res.data.data[0])
+
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -33,6 +30,12 @@ const RecruiterProfile = ({ navigation }) => {
       });
     }
   }
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('accessToken');
+    await AsyncStorage.removeItem('refreshToken');
+    navigation.navigate('option-login')
+  };
 
   useEffect(() => {
     getMyProfile();
@@ -46,10 +49,10 @@ const RecruiterProfile = ({ navigation }) => {
             <Image source={{ uri: `${myProfile.photo}` }} style={styles.profileImage} />
             <View style={styles.profileText}>
               <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>{myProfile.company}</Text>
-              <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.position}</Text>
+              <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.industry}</Text>
               <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                 <GreyPin />
-                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.city}</Text>
+                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.location}</Text>
               </View>
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.description}</Text>
             </View>
@@ -69,20 +72,23 @@ const RecruiterProfile = ({ navigation }) => {
                 <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.instagram}</Text>
               </View>
             }
-            {myProfile.github &&
+            {myProfile.phone &&
               <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                <GreyGithub />
-                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.github}</Text>
+                <GreyPhone />
+                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.phone}</Text>
               </View>
             }
-            {myProfile.gitlab &&
+            {myProfile.linkedin &&
               <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                <GreyGitlab />
-                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.gitlab}</Text>
+                <GreyLinkedin />
+                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.linkedin}</Text>
               </View>
             }
           </View>
         </View>
+        <TouchableOpacity onPress={handleLogout}>
+          <Text style={{ marginTop: 20, fontWeight: 600, fontSize: 22, color: '#1F2A36', textAlign: 'center' }}>Logout</Text>
+        </TouchableOpacity>
       </View>
       <Toast />
     </ScrollView>
@@ -141,7 +147,7 @@ const styles = StyleSheet.create({
   },
   socialContainer: {
     marginBottom: 34,
-    gap:24
+    gap: 24
   },
   profileTabContainer: {
     backgroundColor: '#FFFFFF',

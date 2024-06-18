@@ -4,6 +4,7 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import CustomPicker from '../../components/base/picker';
 import api from '../../configs/api';
+import Input from '../../components/base/input';
 
 const Search = ({ navigation }) => {
   const [worker, setWorker] = useState([]);
@@ -26,9 +27,9 @@ const Search = ({ navigation }) => {
         params: {
           limit: params.limit,
           page: params.page,
-          ...(params.search ? { search: params.search } : {}),
-          ...(params.sort ? { sort: params.sort } : {}),
-          ...(params.sortBy ? { sortBy: params.sortBy } : {})
+          search: params.search,
+          sort: params.sort,
+          sortBy: params.sortBy
         }
       });
 
@@ -52,7 +53,6 @@ const Search = ({ navigation }) => {
 
   useEffect(() => {
     getWorker();
-
   }, [params]);
 
   const renderLoader = () => {
@@ -68,7 +68,7 @@ const Search = ({ navigation }) => {
 
   const handleSearch = () => {
     setWorker([]); // Clear the worker state to reset the list
-    setParams({ ...params, search: searchInput, sort: selectedSort, page: 1 });
+    setParams({ ...params, search: searchInput, sort: selectedSort, sortBy: selectedSortBy, page: 1 });
   };
 
   return (
@@ -81,33 +81,35 @@ const Search = ({ navigation }) => {
             value={searchInput}
             onChangeText={text => setSearchInput(text)}
           />
-          <CustomPicker
-            selectedValue={selectedSort}
-            onValueChange={(value) => setSelectedSort(value)}
-            items={[
-              { label: 'Sort', value: '' },
-              { label: 'Sort by name', value: 'name' },
-              { label: 'Sort by location', value: 'domicile' },
-              { label: 'Sort by recent', value: 'created_at' },
-            ]}
-            placeholder="Sort"
-          />
-          <CustomPicker
-            selectedValue={selectedSortBy}
-            onValueChange={(value) => setSelectedSortBy(value)}
-            items={[
-              { label: 'Sort by', value: '' },
-              { label: 'Sort by ascending', value: 'ASC' },
-              { label: 'Sort by descending', value: 'DESC' },
-            ]}
-            placeholder="Sort by"
-          />
-          <TouchableOpacity
+          <View style={{ witdh:'100%', flexDirection: 'row', gap: 5 }}>
+            <CustomPicker
+              selectedValue={selectedSort}
+              onValueChange={(value) => setSelectedSort(value)}
+              items={[
+                { label: 'Sort', value: '' },
+                { label: 'Sort by name', value: 'name' },
+                { label: 'Sort by location', value: 'location' },
+                { label: 'Sort by recent', value: 'created_at' },
+              ]}
+              placeholder="Sort"
+            />
+            <CustomPicker
+              selectedValue={selectedSortBy}
+              onValueChange={(value) => setSelectedSortBy(value)}
+              items={[
+                { label: 'Sort by', value: '' },
+                { label: 'Sort by ascending', value: 'ASC' },
+                { label: 'Sort by descending', value: 'DESC' },
+              ]}
+              placeholder="Sort by"
+            />
+            <TouchableOpacity
             style={styles.searchButton}
-            onPress={() => handleSearch}
+            onPress={handleSearch}
           >
             <Text style={styles.searchButtonText}>Search</Text>
           </TouchableOpacity>
+          </View>
         </View>
         <FlatList
           data={worker}
@@ -142,9 +144,7 @@ const styles = StyleSheet.create({
     paddingTop: 40
   },
   searchSortContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     paddingVertical: 8,
     paddingHorizontal: 8,
     backgroundColor: 'white',
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     gap: 5
   },
   searchInput: {
-    flex: 1,
-    height: 40,
+    width:'100%',
+    height:48,
     borderColor: '#CCCCCC',
     borderWidth: 1,
     borderRadius: 8,

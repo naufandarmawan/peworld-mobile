@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, ImageBackground } from 'react-native';
 
 import FormContainer from '../../components/module/formcontainer';
@@ -10,6 +10,18 @@ import Toast from 'react-native-toast-message';
 import WhiteLogo from '../../assets/white-logo.svg'
 
 const OptionLogin = ({ navigation }) => {
+
+  useEffect(()=>{
+    const getToken = async () => {
+      const token = await AsyncStorage.getItem('token');
+      if(token) {
+        navigation.navigate('main-tab')
+      }
+    }
+
+    getToken()
+
+  },[])
 
   return (
     <ImageBackground source={require('../../assets/option-background.png')} style={styles.container} resizeMode='cover'>

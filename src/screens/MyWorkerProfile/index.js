@@ -106,7 +106,7 @@ const MyWorkerProfile = ({ route, navigation }) => {
         getMySkills()
         getMyPortfolio()
         getMyExperience()
-    }, [])
+    }, [profile])
 
     return (
         <ScrollView style={styles.container}>

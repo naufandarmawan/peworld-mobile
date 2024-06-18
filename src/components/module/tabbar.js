@@ -5,20 +5,17 @@ import IcInbox from '../../assets/icons/icInbox.svg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import api from '../../configs/api';
+
 
 const MyTabBar = ({ state, descriptors, navigation }) => {
     const [myProfile, setMyProfile] = useState({})
 
     const checkRole = async () => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/auth/check-role`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/auth/checkrole`);
 
-            const { role } = res.data.data.data
+            const { role } = res.data.data[0]
             return role
 
         } catch (error) {
@@ -28,19 +25,19 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
 
     const getMyProfile = async (type) => {
         try {
-            const token = await AsyncStorage.getItem('token')
-            const response = await axios.get(`https://fwm17-be-peword.vercel.app/v1/${type}/profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+            const res = await api.get(`/${type}/profile`);
 
-
-            setMyProfile(response.data.data)
-        } catch (error) {
-            if (error.response.data.message && error.response.data.message.includes('expired')) {
-                navigation.navigate('option-login')
+            if (type === 'recruiters') {
+                setMyProfile(res.data.data[0])
+                return
             }
+
+            setMyProfile(res.data.data)
+
+        } catch (error) {
+            // if (error.response.data.message && error.response.data.message.includes('Expired')) {
+            //     navigation.navigate('option-login')
+            // }
 
             console.log(error?.response.data);
 
@@ -50,7 +47,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
     useEffect(() => {
         const fetchRoleAndProfile = async () => {
             const role = await checkRole();
-            if (role === 'recruiter') {
+            if (role === 'Recruiter') {
                 await getMyProfile('recruiters');
             } else {
                 await getMyProfile('workers');
@@ -59,7 +56,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
 
         fetchRoleAndProfile();
         
-    }, []);
+    }, [myProfile]);
 
     return (
         <View style={styles.container}>

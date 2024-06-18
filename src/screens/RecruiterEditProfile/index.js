@@ -10,45 +10,44 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import GreyUpload from '../../assets/grey-upload.svg'
 import GreyImage from '../../assets/grey-image.svg'
 import GreySize from '../../assets/grey-size.svg'
+import api from '../../configs/api'
 
 const RecruiterEditProfile = ({ navigation }) => {
+
   const [form, setForm] = useState({
+    photo: '',
+    name: '',
     company: '',
     position: '',
-    city: '',
+    industry: '',
+    location: '',
     description: '',
     phone: '',
     instagram: '',
     linkedin: '',
-    photo: '',
-    email: ''
   });
 
   const [myProfile, setMyProfile] = useState({})
 
   const getMyProfile = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
 
-      const res = await axios.get(`https://fwm17-be-peword.vercel.app/v1/recruiters/profile`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const res = await api.get(`/recruiters/profile`);
 
-      const profileData = res.data.data
+      const profileData = res.data.data[0]
 
       setMyProfile(profileData)
       setForm({
         company: profileData.company || '',
         position: profileData.position || '',
-        city: profileData.city || '',
+        location: profileData.location || '',
         description: profileData.description || '',
         phone: profileData.phone || '',
         instagram: profileData.instagram || '',
         linkedin: profileData.linkedin || '',
         photo: profileData.photo || '',
-        email: profileData.email || ''
+        name: profileData.name || '',
+        industry: profileData.industry || '',
       })
     } catch (error) {
       Toast.show({
@@ -61,13 +60,8 @@ const RecruiterEditProfile = ({ navigation }) => {
 
   const handleSave = async () => {
     try {
-      const token = await AsyncStorage.getItem('token')
 
-      const res = await axios.put(`https://fwm17-be-peword.vercel.app/v1/recruiters/profile`, form, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const res = await api.put(`/recruiters/profile`, form);
 
       Toast.show({
         type: 'success',
@@ -95,8 +89,6 @@ const RecruiterEditProfile = ({ navigation }) => {
       }
 
       const data = res.assets[0];
-      console.log(data);
-
 
       const formData = new FormData();
 
@@ -107,8 +99,6 @@ const RecruiterEditProfile = ({ navigation }) => {
         type: data.type,
       };
 
-      console.log(dataImage);
-
       formData.append('file', {
         uri: data.uri,
         name: data.fileName,
@@ -116,8 +106,8 @@ const RecruiterEditProfile = ({ navigation }) => {
         type: data.type,
       });
 
-      const result = await axios.post(
-        'https://fwm17-be-peword.vercel.app/v1/upload',
+      const result = await api.post(
+        '/assets/upload',
         formData,
         {
           headers: {
@@ -126,7 +116,7 @@ const RecruiterEditProfile = ({ navigation }) => {
         },
       );
 
-      const image = result.data.data.file_url
+      const image = result.data.data.file
       setForm({ ...form, photo: image });
 
     } catch (error) {
@@ -143,16 +133,17 @@ const RecruiterEditProfile = ({ navigation }) => {
       <View style={styles.content}>
         <View style={styles.profileContainer}>
           <View style={styles.profileDetails}>
-            <Image source={{ uri: `${myProfile.photo}` }} style={styles.profileImage} />
+            {form.photo ? <Image source={{ uri: `${form.photo}` }} style={styles.profileImage} /> : <Image source={{ uri: `${myProfile.photo}` }} style={styles.profileImage} />}
+            
             <TouchableOpacity onPress={handleChangeImage}>
               <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Edit</Text>
             </TouchableOpacity>
             <View style={styles.profileText}>
               <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>{myProfile.company}</Text>
-              <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.position}</Text>
+              <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36' }}>{myProfile.industry}</Text>
               <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                 <GreyPin />
-                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.city}</Text>
+                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.location}</Text>
               </View>
               <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.description}</Text>
             </View>
@@ -161,12 +152,24 @@ const RecruiterEditProfile = ({ navigation }) => {
 
         <View style={{ gap: 20 }}>
           <Button variant='primary-purple' style={styles.button} onPress={handleSave} text='Simpan' />
-          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('worker-profile')} text='Batal' />
+          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('recruiter-profile')} text='Batal' />
         </View>
 
         <View style={styles.profileTabContainer}>
           <Text style={styles.skillsTitle}>Data Diri</Text>
           <View style={{ gap: 10 }}>
+            <Input
+              value={form.name}
+              onChangeText={value => setForm({ ...form, name: value })}
+              label="Nama"
+              placeholder="Masukan Nama"
+            />
+            <Input
+              value={form.position}
+              onChangeText={value => setForm({ ...form, position: value })}
+              label="Position"
+              placeholder="Masukan jabatan"
+            />
             <Input
               value={form.company}
               onChangeText={value => setForm({ ...form, company: value })}
@@ -174,14 +177,14 @@ const RecruiterEditProfile = ({ navigation }) => {
               placeholder="Masukan bidang perusahaan ex: Financial"
             />
             <Input
-              value={form.position}
-              onChangeText={value => setForm({ ...form, position: value })}
+              value={form.industry}
+              onChangeText={value => setForm({ ...form, industry: value })}
               label="Bidang"
-              placeholder="Masukan job desk"
+              placeholder="Masukan industri"
             />
             <Input
-              value={form.city}
-              onChangeText={value => setForm({ ...form, city: value })}
+              value={form.location}
+              onChangeText={value => setForm({ ...form, location: value })}
               label="Kota"
               placeholder="Masukan kota"
             />
