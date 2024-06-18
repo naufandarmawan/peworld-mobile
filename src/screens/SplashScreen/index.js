@@ -1,14 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import SplashLogo from '../../assets/splash-logo.svg'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = ({ navigation }) => {
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      navigation.navigate('option-login')
-    }, 5000)
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('token');
+      if (token) {
+        navigation.navigate('main-tab')
+      } else {
+        navigation.navigate('option-login');
+      }
+    }
+
+    setTimeout(() => {
+      checkToken();
+    }, 5000);
+
   }, [])
 
   return (

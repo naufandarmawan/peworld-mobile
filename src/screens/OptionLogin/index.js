@@ -11,17 +11,17 @@ import WhiteLogo from '../../assets/white-logo.svg'
 
 const OptionLogin = ({ navigation }) => {
 
-  useEffect(()=>{
-    const getToken = async () => {
-      const token = await AsyncStorage.getItem('token');
-      if(token) {
-        navigation.navigate('main-tab')
-      }
-    }
+  // useEffect(()=>{
+  //   const getToken = async () => {
+  //     const token = await AsyncStorage.getItem('token');
+  //     if(token) {
+  //       navigation.navigate('main-tab')
+  //     }
+  //   }
 
-    getToken()
+  //   getToken()
 
-  },[])
+  // },[])
 
   return (
     <ImageBackground source={require('../../assets/option-background.png')} style={styles.container} resizeMode='cover'>

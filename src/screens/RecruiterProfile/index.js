@@ -32,7 +32,7 @@ const RecruiterProfile = ({ navigation }) => {
   }
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('accessToken');
+    await AsyncStorage.removeItem('token');
     await AsyncStorage.removeItem('refreshToken');
     navigation.navigate('option-login')
   };

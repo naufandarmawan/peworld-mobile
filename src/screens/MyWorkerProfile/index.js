@@ -96,7 +96,7 @@ const MyWorkerProfile = ({ route, navigation }) => {
     };
 
     const handleLogout = async () => {
-        await AsyncStorage.removeItem('accessToken');
+        await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('refreshToken');
         navigation.navigate('option-login')
     };
@@ -214,7 +214,7 @@ const MyWorkerProfile = ({ route, navigation }) => {
                 </View>
 
                 <TouchableOpacity onPress={handleLogout}>
-                    <Text style={{ marginTop: 20, fontWeight: 600, fontSize: 22, color: '#1F2A36', textAlign:'center' }}>Logout</Text>
+                    <Text style={{ marginTop: 20, fontWeight: 600, fontSize: 22, color: '#1F2A36', textAlign: 'center' }}>Logout</Text>
                 </TouchableOpacity>
             </View>
             <Toast />

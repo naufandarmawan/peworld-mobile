@@ -8,6 +8,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import PurpleLogo from '../../assets/purple-logo.svg'
+import api from '../../configs/api';
+
 
 const VerifyForgotPassword = ({ route, navigation }) => {
 
@@ -31,10 +33,7 @@ const VerifyForgotPassword = ({ route, navigation }) => {
                 return;
             }
 
-            const res = await axios.post(
-                `https://fwm17-be-peword.vercel.app/v1/auth/login`,
-                form,
-            );
+            const res = await api.post(`/auth/verify-forgot-password`, form);
 
             Toast.show({
                 type: 'success',
@@ -42,7 +41,7 @@ const VerifyForgotPassword = ({ route, navigation }) => {
                 text2: res.data.message
             });
 
-            navigation.navigate('forgot-password', { form });
+            navigation.navigate('forgot-password', form);
 
         } catch (error) {
             Toast.show({

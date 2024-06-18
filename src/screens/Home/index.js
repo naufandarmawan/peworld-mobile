@@ -35,7 +35,7 @@ const Home = ({ navigation }) => {
 
     const getWorker = async () => {
         try {
-            const res = await api.get(`/workers/`, {params});
+            const res = await api.get(`/workers/`, { params });
 
             const { data } = res.data;
 
@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
     }
 
     useEffect(() => {
-        const fetchRoleAndProfile = async () => {
+        const getRole = async () => {
             const role = await checkRole();
             if (role === 'Recruiter') {
                 await getMyProfile('recruiters');
@@ -86,7 +86,7 @@ const Home = ({ navigation }) => {
             }
         };
 
-        fetchRoleAndProfile();
+        getRole();
         getWorker();
     }, [params]);
 
@@ -115,7 +115,7 @@ const Home = ({ navigation }) => {
                 </TouchableOpacity>
             </ImageBackground>
             <View style={{ paddingHorizontal: 16, gap: 16, paddingBottom: 250 }}>
-                <Text style={{ fontWeight: 600, fontSize: 18, color: '#1F2A36' }}>Web Developer</Text>
+                <Text style={{ fontWeight: 600, fontSize: 18, color: '#1F2A36' }}>Top Talents</Text>
                 <FlatList
                     data={worker}
                     keyExtractor={(item, index) => `${item.id}_${index}`}
@@ -125,7 +125,15 @@ const Home = ({ navigation }) => {
                             <View style={{ gap: 4 }}>
                                 {item.name && <Text style={styles.cardName}>{item.name}</Text>}
                                 {item.position && <Text style={styles.cardJob}>{item.position}</Text>}
-                                {item.skills && <Text style={styles.cardSkills}>{item.skills.join(', ')}</Text>}
+                                {item.skills && (
+                                    <View style={styles.skillsContainer}>
+                                        {item.skills.map((skill, index) => (
+                                            <View key={index} style={styles.skillItem}>
+                                                <Text style={styles.skillText}>{skill}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                )}
                             </View>
                         </TouchableOpacity>
                     )}
@@ -216,4 +224,23 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#666',
     },
+    skillsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 4,
+    },
+    skillItem: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        backgroundColor: '#FBB017',
+        borderColor: '#FBB017',
+        borderWidth: 1,
+        borderRadius: 4,
+    },
+    skillText: {
+        fontWeight: '600',
+        fontSize: 12,
+        color: '#FFFFFF',
+    },
+
 });

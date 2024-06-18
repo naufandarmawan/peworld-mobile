@@ -8,8 +8,10 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import PurpleLogo from '../../assets/purple-logo.svg'
+import api from '../../configs/api';
 
-const ForgotPassword = ({ navigation }) => {
+
+const ForgotPassword = ({ route, navigation }) => {
 
     const { email, resetCode } = route.params
 
@@ -43,10 +45,7 @@ const ForgotPassword = ({ navigation }) => {
 
             const { email, resetCode, newPassword } = form;
 
-            const res = await axios.post(
-                `https://fwm17-be-peword.vercel.app/v1/auth/login`,
-                { email, resetCode, newPassword }
-            );
+            const res = await api.post(`/auth/request-forgot-password`, { email, resetCode, newPassword });
 
             Toast.show({
                 type: 'success',
@@ -74,15 +73,17 @@ const ForgotPassword = ({ navigation }) => {
                         <View style={styles.inputContainer}>
                             <Input
                                 value={form.newPassword}
-                                onChangeText={value => setForm({ ...form, resetCode: value })}
+                                onChangeText={value => setForm({ ...form, newPassword: value })}
                                 label="Kata sandi baru"
                                 placeholder="Masukan kata sandi baru"
+                                secureTextEntry={true}
                             />
                             <Input
-                                value={form.resetCode}
-                                onChangeText={value => setForm({ ...form, resetCode: value })}
+                                value={form.confirmPassword}
+                                onChangeText={value => setForm({ ...form, confirmPassword: value })}
                                 label="Konfirmasi kata sandi baru"
-                                placeholder="Masukan kata sandi baru"
+                                placeholder="Masukan ulang kata sandi baru"
+                                secureTextEntry={true}
                             />
                         </View>
                         <View style={styles.actionContainer}>
