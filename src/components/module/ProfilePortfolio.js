@@ -12,7 +12,13 @@ import GreyImage from '../../assets/grey-image.svg'
 import GreySize from '../../assets/grey-size.svg'
 import api from '../../configs/api'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setPortfolio } from '../../configs/redux/reducers/portfolioReducer'
+
+
 const ProfilePortfolio = () => {
+    const dispatch = useDispatch()
+
     const [portfolioForm, setPortfolioForm] = useState({
         id: '',
         name: '',
@@ -21,7 +27,9 @@ const ProfilePortfolio = () => {
         image: '',
     })
 
-    const [myPortfolio, setMyPortfolio] = useState([])
+    // const [myPortfolio, setMyPortfolio] = useState([])
+    const myPortfolio = useSelector((state) => state.portfolio);
+
     const [selectedOption, setSelectedOption] = useState('Aplikasi Mobile');
 
     const getMyPortfolio = async () => {
@@ -29,7 +37,9 @@ const ProfilePortfolio = () => {
 
             const res = await api.get(`/portfolio`);
 
-            setMyPortfolio(res.data.data)
+            dispatch(setPortfolio(res.data.data))
+
+            // setMyPortfolio(res.data.data)
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -154,9 +164,9 @@ const ProfilePortfolio = () => {
         }
     };
 
-    useEffect(() => {
-        getMyPortfolio()
-    }, [])
+    // useEffect(() => {
+    //     getMyPortfolio()
+    // }, [])
 
     return (
         <View style={{ backgroundColor: '#FFFFFF', padding: 30, borderRadius: 10, gap: 20 }}>

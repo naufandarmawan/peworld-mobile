@@ -7,16 +7,25 @@ import Toast from 'react-native-toast-message'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import api from '../../configs/api'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setSkills } from '../../configs/redux/reducers/skillsReducer'
+
+
 const ProfileSkill = () => {
+    const dispatch = useDispatch()
+
     const [skillForm, setSkillForm] = useState('')
-    const [mySkills, setMySkills] = useState([])
+
+    // const [mySkills, setMySkills] = useState([])
+    const mySkills = useSelector((state) => state.skills);
 
     const getMySkills = async () => {
         try {
 
             const res = await api.get(`/skill/`);
-
-            setMySkills(res.data.data)
+            
+            dispatch(setSkills(res.data.data))
+            // setMySkills(res.data.data)
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -71,9 +80,9 @@ const ProfileSkill = () => {
         }
     }
 
-    useEffect(() => {
-        getMySkills()
-    }, [])
+    // useEffect(() => {
+    //     getMySkills()
+    // }, [])
 
     return (
         <View style={styles.profileTabContainer}>

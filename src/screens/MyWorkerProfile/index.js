@@ -11,75 +11,88 @@ import GreyGithub from '../../assets/grey-github.svg'
 import GreyGitlab from '../../assets/grey-gitlab.svg'
 import api from '../../configs/api'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { clearProfile, setProfile } from '../../configs/redux/reducers/profileReducer';
+import { clearSkills, setSkills } from '../../configs/redux/reducers/skillsReducer';
+import { clearPortfolio, setPortfolio } from '../../configs/redux/reducers/portfolioReducer';
+import { clearExperience, setExperience } from '../../configs/redux/reducers/experienceReducer';
+
 
 const MyWorkerProfile = ({ route, navigation }) => {
 
-    const [profile, setProfile] = useState({})
-    const [skills, setSkills] = useState([])
-    const [portfolio, setPortfolio] = useState([]);
-    const [experience, setExperience] = useState([]);
+    // const [profile, setProfile] = useState({})
+    // const [skills, setSkills] = useState([])
+    // const [portfolio, setPortfolio] = useState([]);
+    // const [experience, setExperience] = useState([]);
+
+    const dispatch = useDispatch();
+
+    const profile = useSelector((state) => state.profile);
+    const skills = useSelector((state) => state.skills);
+    const portfolio = useSelector((state) => state.portfolio);
+    const experience = useSelector((state) => state.experience);
 
     const [toggle, setToggle] = useState(1);
 
-    const getMyProfile = async () => {
-        try {
+    // const getMyProfile = async () => {
+    //     try {
 
-            const res = await api.get(`/workers/profile/`);
+    //         const res = await api.get(`/workers/profile/`);
 
-            setProfile(res.data.data)
-        } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: error.response.data.message || 'Something went wrong'
-            });
-        }
-    }
+    //         setProfile(res.data.data)
+    //     } catch (error) {
+    //         Toast.show({
+    //             type: 'error',
+    //             text1: 'Error',
+    //             text2: error.response.data.message || 'Something went wrong'
+    //         });
+    //     }
+    // }
 
-    const getMySkills = async () => {
-        try {
+    // const getMySkills = async () => {
+    //     try {
 
-            const res = await api.get(`/skill/`);
+    //         const res = await api.get(`/skill/`);
 
-            setSkills(res.data.data)
-        } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: error.response.data.message || 'Something went wrong'
-            });
-        }
-    }
+    //         setSkills(res.data.data)
+    //     } catch (error) {
+    //         Toast.show({
+    //             type: 'error',
+    //             text1: 'Error',
+    //             text2: error.response.data.message || 'Something went wrong'
+    //         });
+    //     }
+    // }
 
-    const getMyExperience = async () => {
-        try {
+    // const getMyExperience = async () => {
+    //     try {
 
-            const res = await api.get(`/experience/`);
+    //         const res = await api.get(`/experience/`);
 
-            setExperience(res.data.data)
-        } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: error.response.data.message || 'Something went wrong'
-            });
-        }
-    }
+    //         setExperience(res.data.data)
+    //     } catch (error) {
+    //         Toast.show({
+    //             type: 'error',
+    //             text1: 'Error',
+    //             text2: error.response.data.message || 'Something went wrong'
+    //         });
+    //     }
+    // }
 
-    const getMyPortfolio = async () => {
-        try {
+    // const getMyPortfolio = async () => {
+    //     try {
 
-            const res = await api.get(`/portfolio/`);
+    //         const res = await api.get(`/portfolio/`);
 
-            setPortfolio(res.data.data)
-        } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: error.response.data.message || 'Something went wrong'
-            });
-        }
-    }
+    //         setPortfolio(res.data.data)
+    //     } catch (error) {
+    //         Toast.show({
+    //             type: 'error',
+    //             text1: 'Error',
+    //             text2: error.response.data.message || 'Something went wrong'
+    //         });
+    //     }
+    // }
 
     const handleToggle = (id) => {
         setToggle(id);
@@ -96,17 +109,58 @@ const MyWorkerProfile = ({ route, navigation }) => {
     };
 
     const handleLogout = async () => {
-        await AsyncStorage.removeItem('token');
-        await AsyncStorage.removeItem('refreshToken');
-        navigation.navigate('option-login')
+        try {
+            await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('refreshToken');
+
+            dispatch(clearProfile())
+            dispatch(clearSkills())
+            dispatch(clearPortfolio())
+            dispatch(clearExperience())
+
+            navigation.navigate('option-login')
+        } catch (error) {
+            console.log(error);
+            
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.response.data.message || 'Something went wrong'
+            });
+        }
+
     };
 
     useEffect(() => {
-        getMyProfile()
-        getMySkills()
-        getMyPortfolio()
-        getMyExperience()
-    }, [profile])
+        // getMyProfile()
+        // getMySkills()
+        // getMyPortfolio()
+        // getMyExperience()
+        const fetchData = async () => {
+            try {
+                const profileRes = await api.get(`/workers/profile/`);
+                dispatch(setProfile(profileRes.data.data));
+
+                const skillsRes = await api.get(`/skill/`);
+                dispatch(setSkills(skillsRes.data.data));
+
+                const portfolioRes = await api.get(`/portfolio/`);
+                dispatch(setPortfolio(portfolioRes.data.data));
+
+                const experienceRes = await api.get(`/experience/`);
+                dispatch(setExperience(experienceRes.data.data));
+            } catch (error) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: error.response?.data?.message || 'Something went wrong'
+                });
+            }
+        };
+
+        fetchData();
+
+    }, [dispatch])
 
     return (
         <ScrollView style={styles.container}>

@@ -7,8 +7,13 @@ import axios from 'axios'
 import Toast from 'react-native-toast-message'
 import api from '../../configs/api'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setExperience } from '../../configs/redux/reducers/experienceReducer'
+
 
 const ProfileExperience = () => {
+    const dispatch = useDispatch()
+
     const [experienceForm, setExperienceForm] = useState({
         id: '',
         position: '',
@@ -17,14 +22,18 @@ const ProfileExperience = () => {
         end_date: '',
         description: '',
     })
-    const [myExperience, setMyExperience] = useState([])
+
+    // const [myExperience, setMyExperience] = useState([])
+    const myExperience = useSelector((state) => state.experience);
 
     const getMyExperience = async () => {
         try {
 
             const res = await api.get(`/experience`);
 
-            setMyExperience(res.data.data)
+            dispatch(setExperience(res.data.data))
+
+            // setMyExperience(res.data.data)
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -67,6 +76,8 @@ const ProfileExperience = () => {
             }
 
         } catch (error) {
+            console.log(error.response.data);
+
             Toast.show({
                 type: 'error',
                 text1: 'Error',
@@ -100,9 +111,9 @@ const ProfileExperience = () => {
         return date.toLocaleDateString('en-US', options);
     };
 
-    useEffect(() => {
-        getMyExperience()
-    }, [])
+    // useEffect(() => {
+    //     getMyExperience()
+    // }, [])
 
     return (
         <View style={{ backgroundColor: '#FFFFFF', padding: 30, borderRadius: 10, gap: 20 }}>

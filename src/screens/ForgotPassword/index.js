@@ -45,7 +45,7 @@ const ForgotPassword = ({ route, navigation }) => {
 
             const { email, resetCode, newPassword } = form;
 
-            const res = await api.post(`/auth/request-forgot-password`, { email, resetCode, newPassword });
+            const res = await api.post(`/auth/forgot-password`, { email, resetCode, newPassword });
 
             Toast.show({
                 type: 'success',

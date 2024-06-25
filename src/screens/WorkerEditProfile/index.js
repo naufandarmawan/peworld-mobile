@@ -12,19 +12,25 @@ import ProfilePortfolio from '../../components/module/ProfilePortfolio'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import api from '../../configs/api'
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setProfile } from '../../configs/redux/reducers/profileReducer';
 
 
 const WorkerEditProfile = ({ navigation }) => {
+  const dispatch = useDispatch()
+
+  const myProfile = useSelector((state) => state.profile);
+
   const [form, setForm] = useState({
-    name: '',
-    position: '',
-    location: '',
-    workplace: '',
-    description: '',
-    photo: '',
+    name: myProfile.name || '',
+    position: myProfile.position || '',
+    location: myProfile.location || '',
+    workplace: myProfile.workplace || '',
+    description: myProfile.description || '',
+    photo: myProfile.photo || '',
   });
 
-  const [myProfile, setMyProfile] = useState({})
+  // const [myProfile, setMyProfile] = useState({})
 
   const getMyProfile = async () => {
     try {
@@ -33,16 +39,20 @@ const WorkerEditProfile = ({ navigation }) => {
 
       const profileData = res.data.data
 
-      setMyProfile(profileData)
+      dispatch(setProfile(profileData))
 
-      setForm({
-        name: profileData.name || '',
-        position: profileData.position || '',
-        location: profileData.location || '',
-        workplace: profileData.workplace || '',
-        description: profileData.description || '',
-        photo: profileData.photo || '',
-      })
+      // console.log(myProfile);
+
+      // setMyProfile(profileData)
+
+      // setForm({
+      //   name: profileData.name || '',
+      //   position: profileData.position || '',
+      //   location: profileData.location || '',
+      //   workplace: profileData.workplace || '',
+      //   description: profileData.description || '',
+      //   photo: profileData.photo || '',
+      // })
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -62,6 +72,8 @@ const WorkerEditProfile = ({ navigation }) => {
           workplace: form.workplace,
           description: form.description,
         })
+
+      getMyProfile()
 
       Toast.show({
         type: 'success',
@@ -212,9 +224,9 @@ const WorkerEditProfile = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    getMyProfile();
-  }, [])
+  // useEffect(() => {
+  //   getMyProfile();
+  // }, [])
 
   return (
     <ScrollView style={styles.container}>

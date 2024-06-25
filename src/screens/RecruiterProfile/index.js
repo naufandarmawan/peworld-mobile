@@ -39,7 +39,7 @@ const RecruiterProfile = ({ navigation }) => {
 
   useEffect(() => {
     getMyProfile();
-  }, [])
+  }, [myProfile])
 
   return (
     <ScrollView style={styles.container}>
