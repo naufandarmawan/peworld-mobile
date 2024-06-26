@@ -55,7 +55,7 @@ const MainTab = () => {
     }, []);
 
     return (
-        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home' screenOptions={{
+        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} initialRouteName='Home' detachInactiveScreens={false} screenOptions={{
             headerShown: false,
         }}>
             <Tab.Screen name="Home" component={HomeStack} />
