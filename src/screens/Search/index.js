@@ -67,7 +67,7 @@ const Search = ({ navigation }) => {
   };
 
   const handleSearch = () => {
-    setWorker([]); // Clear the worker state to reset the list
+    setWorker([]);
     setParams({ ...params, search: searchInput, sort: selectedSort, sortBy: selectedSortBy, page: 1 });
   };
 
@@ -97,11 +97,11 @@ const Search = ({ navigation }) => {
               selectedValue={selectedSortBy}
               onValueChange={(value) => setSelectedSortBy(value)}
               items={[
-                { label: 'Sort by', value: '' },
-                { label: 'Sort by ascending', value: 'ASC' },
-                { label: 'Sort by descending', value: 'DESC' },
+                { label: 'Order', value: '' },
+                { label: 'Ascending', value: 'ASC' },
+                { label: 'Descending', value: 'DESC' },
               ]}
-              placeholder="Sort by"
+              placeholder="Order"
             />
             <TouchableOpacity
             style={styles.searchButton}
@@ -116,7 +116,7 @@ const Search = ({ navigation }) => {
           keyExtractor={(item, index) => `${item.id}_${index}`}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => navigation.navigate(`worker-profile`, { id: item.id })} style={styles.card}>
-              {item.photo ? <Image source={{ uri: item.photo }} style={styles.cardImage} /> : <View style={{ width: 60, height: 60, borderRadius: 60, backgroundColor: '#9EA0A5' }} />}
+              {item.photo ? <Image source={{ uri: item.photo }} style={styles.cardImage} /> : <Image source={require('../../assets/user-thumbnail.jpg')} style={styles.cardImage} />}
               <View style={{ gap: 4 }}>
                 {item.name && <Text style={styles.cardName}>{item.name}</Text>}
                 {item.position && <Text style={styles.cardJob}>{item.position}</Text>}

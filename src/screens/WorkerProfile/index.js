@@ -10,6 +10,7 @@ import GreyInstagram from '../../assets/grey-instagram.svg'
 import GreyGithub from '../../assets/grey-github.svg'
 import GreyGitlab from '../../assets/grey-gitlab.svg'
 import api from '../../configs/api'
+import CompanyLogo from '../../assets/company-logo2.svg'
 
 
 const WorkerProfile = ({ route, navigation }) => {
@@ -166,11 +167,11 @@ const WorkerProfile = ({ route, navigation }) => {
           <View style={{}}>
             <View style={styles.tabContainer}>
               <TouchableOpacity style={styles.tab} onPress={() => handleToggle(1)}>
-                <Text style={toggle === 1 ? styles.activeTabText : styles.inactiveTabText}>Portfolio</Text>
+                <Text style={toggle === 1 ? styles.activeTabText : styles.inactiveTabText}>Portfolios</Text>
                 <View style={toggle === 1 ? styles.activeTabIndicator : styles.inactiveTabIndicator}></View>
               </TouchableOpacity>
               <TouchableOpacity style={styles.tab} onPress={() => handleToggle(2)}>
-                <Text style={toggle === 2 ? styles.activeTabText : styles.inactiveTabText}>Pengalaman Kerja</Text>
+                <Text style={toggle === 2 ? styles.activeTabText : styles.inactiveTabText}>Working Experience</Text>
                 <View style={toggle === 2 ? styles.activeTabIndicator : styles.inactiveTabIndicator}></View>
               </TouchableOpacity>
             </View>
@@ -192,7 +193,8 @@ const WorkerProfile = ({ route, navigation }) => {
                 <View style={styles.list}>
                   {experience.map((item) => (
                     <View key={item.id} style={{ flexDirection: 'row', gap: 20 }}>
-                      <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} />
+                      <CompanyLogo />
+                      {/* <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} /> */}
                       <View style={{ gap: 6, flex:1 }}>
                         <Text style={{ fontWeight: 600, fontSize: 20, color: '#1F2A36' }}>{item.position}</Text>
                         <Text style={{ fontWeight: 400, fontSize: 18, color: '#46505C' }}>{item.company}</Text>

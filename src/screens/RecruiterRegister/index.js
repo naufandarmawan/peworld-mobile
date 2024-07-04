@@ -57,52 +57,52 @@ const RecruiterRegister = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <View style={styles.flexColumn}>
         <PurpleLogo />
-        <FormContainer formTitle='Signup' formDescription='Lorom ipsum dolor si amet uegas anet.'>
+        <FormContainer formTitle='Signup' formDescription='Connect with top talent and expand your global reach efficiently.'>
           <View style={styles.inputContainer}>
             <Input
               value={form.email}
               onChangeText={value => setForm({ ...form, email: value })}
               label="Email"
-              placeholder="Masukan alamat email"
+              placeholder="Enter your email address"
             />
             <Input
               value={form.password}
               onChangeText={value => setForm({ ...form, password: value })}
               secureTextEntry={true}
               label="Password"
-              placeholder="Masukan kata sandi"
+              placeholder="Enter your password"
             />
             <Input
               value={form.name}
               onChangeText={value => setForm({ ...form, name: value })}
               label="Name"
-              placeholder="Masukan nama panjang"
+              placeholder="Enter your full name"
             />
             <Input
               value={form.company}
               onChangeText={value => setForm({ ...form, company: value })}
-              label="Perusahaan"
-              placeholder="Masukan nama perusahaan"
+              label="Company"
+              placeholder="Enter your company name"
             />
             <Input
               value={form.position}
               onChangeText={value => setForm({ ...form, position: value })}
-              label="Jabatan"
-              placeholder="Posisi di perusahaan anda"
+              label="Position"
+              placeholder="Enter your position in the company"
             />
             <Input
               value={form.phone}
               onChangeText={value => setForm({ ...form, phone: value })}
-              label="Phone"
-              placeholder="Masukan no handphone"
+              label="Phone Number"
+              placeholder="Enter your phone number"
             />
           </View>
           <View style={styles.actionContainer}>
-            <Button variant='primary-yellow' onPress={handleRegister} text='Daftar' />
+            <Button variant='primary-yellow' onPress={handleRegister} text='Register' />
             <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
-              <Text style={styles.textCenter}>Anda sudah punya akun?</Text>
+              <Text style={styles.textCenter}>Already have an account?</Text>
               <TouchableOpacity onPress={() => navigation.navigate('recruiter-login')}>
-                <Text style={styles.linkYellow}>Masuk disini</Text>
+                <Text style={styles.linkYellow}>Log in here</Text>
               </TouchableOpacity>
             </View>
           </View>

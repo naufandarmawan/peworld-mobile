@@ -234,12 +234,12 @@ const WorkerEditProfile = ({ navigation }) => {
         <View style={styles.profileContainer}>
           <View style={styles.profileDetails}>
             <Image source={{ uri: `${myProfile.photo}` }} style={styles.profileImage} />
-            <View style={{ flexDirection: 'row', gap: 20 }}>
+            <View style={{ flexDirection: 'column', alignItems:'center', gap: 20 }}>
               <TouchableOpacity onPress={handleChangeLibrary}>
-                <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Open Gallery</Text>
+                <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Select from Gallery</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleChangeCamera}>
-                <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Open Camera</Text>
+                <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Take a Photo</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.profileText}>
@@ -256,42 +256,43 @@ const WorkerEditProfile = ({ navigation }) => {
         </View>
 
         <View style={{ gap: 20 }}>
-          <Button variant='primary-purple' style={styles.button} onPress={handleSave} text='Simpan' />
-          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('my-worker-profile')} text='Batal' />
+          <Button variant='primary-purple' style={styles.button} onPress={handleSave} text='Save' />
+          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('my-worker-profile')} text='Cancel' />
         </View>
 
         <View style={styles.profileTabContainer}>
-          <Text style={styles.skillsTitle}>Data Diri</Text>
+          <Text style={styles.skillsTitle}>Personal Information</Text>
           <View style={{ gap: 10 }}>
             <Input
               value={form.name}
               onChangeText={value => setForm({ ...form, name: value })}
-              label="Nama lengkap"
-              placeholder="Masukan nama lengkap"
+              label="Full Name"
+              placeholder="Enter your full name"
             />
             <Input
               value={form.position}
               onChangeText={value => setForm({ ...form, position: value })}
-              label="Job title"
-              placeholder="Masukan job title"
+              label="Job Title"
+              placeholder="Enter your job title"
             />
             <Input
               value={form.location}
               onChangeText={value => setForm({ ...form, location: value })}
-              label="Domisili"
-              placeholder="Masukan domisili"
+              label="Location"
+              placeholder="Enter your location"
             />
             <Input
               value={form.workplace}
               onChangeText={value => setForm({ ...form, workplace: value })}
-              label="Tempat kerja"
-              placeholder="Masukan tempat kerja"
+              label="Workplace"
+              placeholder="Enter your workplace"
             />
             <Input
               value={form.description}
               onChangeText={value => setForm({ ...form, description: value })}
-              label="Deskripsi singkat"
-              placeholder="Tuliskan deskripsi singkat"
+              label="Short Description"
+              placeholder="Write a short description"
+              multiline={true}
             />
           </View>
         </View>

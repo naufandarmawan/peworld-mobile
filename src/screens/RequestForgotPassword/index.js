@@ -24,7 +24,7 @@ const RequestForgotPassword = ({ navigation }) => {
                 Toast.show({
                     type: 'error',
                     text1: 'Error',
-                    text2: 'Borang harus diisi',
+                    text2: 'Please enter your email address.',
                 });
                 return;
             }
@@ -53,13 +53,13 @@ const RequestForgotPassword = ({ navigation }) => {
             <View style={styles.innerContainer}>
                 <View style={styles.flexColumn}>
                     <PurpleLogo />
-                    <FormContainer formTitle='Reset password' formDescription='Enter your password user account’s verified email and we will send you a password reset link.'>
+                    <FormContainer formTitle='Reset password' formDescription='Enter your account’s verified email address, and we will send you a password reset link.'>
                         <View style={styles.inputContainer}>
                             <Input
                                 value={form.email}
                                 onChangeText={value => setForm({ ...form, email: value })}
                                 label="Email"
-                                placeholder="Masukan alamat email"
+                                placeholder="Enter your email address"
                             />
                         </View>
                         <View style={styles.actionContainer}>

@@ -5,10 +5,10 @@ import NotificationEmpty from '../../assets/inbox-empty.svg'
 const Inbox = () => {
   return (
     <View style={{ flex: 1, backgroundColor: '#F6F7F8', padding: 30 }}>
-      <Text style={{ fontWeight: 600, fontSize: 18, color: '#9EA0A5', textAlign: 'left' }}>Utama</Text>
+      <Text style={{ fontWeight: 600, fontSize: 18, color: '#9EA0A5', textAlign: 'left' }}>Primary</Text>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 20 }}>
         <NotificationEmpty />
-        <Text style={{ fontWeight: 600, fontSize: 14, color: '#1F2A36', textAlign: 'center' }}>Belum ada inbox</Text>
+        <Text style={{ fontWeight: 600, fontSize: 14, color: '#1F2A36', textAlign: 'center' }}>No messages yet</Text>
       </View>
     </View>
   )

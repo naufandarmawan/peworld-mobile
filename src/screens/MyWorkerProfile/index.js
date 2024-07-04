@@ -10,6 +10,7 @@ import GreyInstagram from '../../assets/grey-instagram.svg'
 import GreyGithub from '../../assets/grey-github.svg'
 import GreyGitlab from '../../assets/grey-gitlab.svg'
 import api from '../../configs/api'
+import CompanyLogo from '../../assets/company-logo2.svg'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { clearProfile, setProfile } from '../../configs/redux/reducers/profileReducer';
@@ -20,11 +21,6 @@ import { clearExperience, setExperience } from '../../configs/redux/reducers/exp
 
 const MyWorkerProfile = ({ route, navigation }) => {
 
-    // const [profile, setProfile] = useState({})
-    // const [skills, setSkills] = useState([])
-    // const [portfolio, setPortfolio] = useState([]);
-    // const [experience, setExperience] = useState([]);
-
     const dispatch = useDispatch();
 
     const profile = useSelector((state) => state.profile);
@@ -33,66 +29,6 @@ const MyWorkerProfile = ({ route, navigation }) => {
     const experience = useSelector((state) => state.experience);
 
     const [toggle, setToggle] = useState(1);
-
-    // const getMyProfile = async () => {
-    //     try {
-
-    //         const res = await api.get(`/workers/profile/`);
-
-    //         setProfile(res.data.data)
-    //     } catch (error) {
-    //         Toast.show({
-    //             type: 'error',
-    //             text1: 'Error',
-    //             text2: error.response.data.message || 'Something went wrong'
-    //         });
-    //     }
-    // }
-
-    // const getMySkills = async () => {
-    //     try {
-
-    //         const res = await api.get(`/skill/`);
-
-    //         setSkills(res.data.data)
-    //     } catch (error) {
-    //         Toast.show({
-    //             type: 'error',
-    //             text1: 'Error',
-    //             text2: error.response.data.message || 'Something went wrong'
-    //         });
-    //     }
-    // }
-
-    // const getMyExperience = async () => {
-    //     try {
-
-    //         const res = await api.get(`/experience/`);
-
-    //         setExperience(res.data.data)
-    //     } catch (error) {
-    //         Toast.show({
-    //             type: 'error',
-    //             text1: 'Error',
-    //             text2: error.response.data.message || 'Something went wrong'
-    //         });
-    //     }
-    // }
-
-    // const getMyPortfolio = async () => {
-    //     try {
-
-    //         const res = await api.get(`/portfolio/`);
-
-    //         setPortfolio(res.data.data)
-    //     } catch (error) {
-    //         Toast.show({
-    //             type: 'error',
-    //             text1: 'Error',
-    //             text2: error.response.data.message || 'Something went wrong'
-    //         });
-    //     }
-    // }
 
     const handleToggle = (id) => {
         setToggle(id);
@@ -121,7 +57,7 @@ const MyWorkerProfile = ({ route, navigation }) => {
             navigation.navigate('option-login')
         } catch (error) {
             console.log(error);
-            
+
             Toast.show({
                 type: 'error',
                 text1: 'Error',
@@ -132,10 +68,6 @@ const MyWorkerProfile = ({ route, navigation }) => {
     };
 
     useEffect(() => {
-        // getMyProfile()
-        // getMySkills()
-        // getMyPortfolio()
-        // getMyExperience()
         const fetchData = async () => {
             try {
                 const profileRes = await api.get(`/workers/profile/`);
@@ -182,7 +114,7 @@ const MyWorkerProfile = ({ route, navigation }) => {
                     </View>
 
                     <View style={styles.skillsContainer}>
-                        <Text style={styles.skillsTitle}>Skill</Text>
+                        <Text style={styles.skillsTitle}>Skills</Text>
                         <View style={styles.skillsList}>
                             {skills.map((item) => (
                                 <View key={item.id} style={{ paddingHorizontal: 12, paddingVertical: 4, backgroundColor: '#FDD074', borderColor: '#FBB017', borderWidth: 1, borderRadius: 4 }}>
@@ -225,11 +157,11 @@ const MyWorkerProfile = ({ route, navigation }) => {
                     <View style={{}}>
                         <View style={styles.tabContainer}>
                             <TouchableOpacity style={styles.tab} onPress={() => handleToggle(1)}>
-                                <Text style={toggle === 1 ? styles.activeTabText : styles.inactiveTabText}>Portfolio</Text>
+                                <Text style={toggle === 1 ? styles.activeTabText : styles.inactiveTabText}>Portfolios</Text>
                                 <View style={toggle === 1 ? styles.activeTabIndicator : styles.inactiveTabIndicator}></View>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.tab} onPress={() => handleToggle(2)}>
-                                <Text style={toggle === 2 ? styles.activeTabText : styles.inactiveTabText}>Pengalaman Kerja</Text>
+                                <Text style={toggle === 2 ? styles.activeTabText : styles.inactiveTabText}>Work Experiences</Text>
                                 <View style={toggle === 2 ? styles.activeTabIndicator : styles.inactiveTabIndicator}></View>
                             </TouchableOpacity>
                         </View>
@@ -251,7 +183,8 @@ const MyWorkerProfile = ({ route, navigation }) => {
                                 <View style={styles.list}>
                                     {experience.map((item) => (
                                         <View key={item.id} style={{ flexDirection: 'row', gap: 20 }}>
-                                            <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} />
+                                            <CompanyLogo />
+                                            {/* <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} /> */}
                                             <View style={{ gap: 6, flex: 1 }}>
                                                 <Text style={{ fontWeight: 600, fontSize: 20, color: '#1F2A36' }}>{item.position}</Text>
                                                 <Text style={{ fontWeight: 400, fontSize: 18, color: '#46505C' }}>{item.company}</Text>

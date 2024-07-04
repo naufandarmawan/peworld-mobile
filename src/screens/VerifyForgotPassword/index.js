@@ -28,7 +28,7 @@ const VerifyForgotPassword = ({ route, navigation }) => {
                 Toast.show({
                     type: 'error',
                     text1: 'Error',
-                    text2: 'Borang harus diisi',
+                    text2: 'All fields are required.',
                 });
                 return;
             }
@@ -63,7 +63,7 @@ const VerifyForgotPassword = ({ route, navigation }) => {
                                 value={form.resetCode}
                                 onChangeText={value => setForm({ ...form, resetCode: value })}
                                 label="PIN"
-                                placeholder="Masukan PIN"
+                                placeholder="Enter your PIN"
                             />
                         </View>
                         <View style={styles.actionContainer}>

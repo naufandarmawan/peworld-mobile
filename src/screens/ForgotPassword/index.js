@@ -29,7 +29,7 @@ const ForgotPassword = ({ route, navigation }) => {
                 Toast.show({
                     type: 'error',
                     text1: 'Error',
-                    text2: 'Borang harus diisi',
+                    text2: 'Form must be filled out.',
                 });
                 return;
             }
@@ -38,7 +38,7 @@ const ForgotPassword = ({ route, navigation }) => {
                 Toast.show({
                     type: 'error',
                     text1: 'Error',
-                    text2: 'Passwords do not match',
+                    text2: 'Passwords do not match.',
                 });
                 return;
             }
@@ -74,15 +74,15 @@ const ForgotPassword = ({ route, navigation }) => {
                             <Input
                                 value={form.newPassword}
                                 onChangeText={value => setForm({ ...form, newPassword: value })}
-                                label="Kata sandi baru"
-                                placeholder="Masukan kata sandi baru"
+                                label="New Password"
+                                placeholder="Enter your new password"
                                 secureTextEntry={true}
                             />
                             <Input
                                 value={form.confirmPassword}
                                 onChangeText={value => setForm({ ...form, confirmPassword: value })}
-                                label="Konfirmasi kata sandi baru"
-                                placeholder="Masukan ulang kata sandi baru"
+                                label="Confirm New Password"
+                                placeholder="Re-enter your new password"
                                 secureTextEntry={true}
                             />
                         </View>

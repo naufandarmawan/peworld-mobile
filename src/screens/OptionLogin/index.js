@@ -11,33 +11,21 @@ import WhiteLogo from '../../assets/white-logo.svg'
 
 const OptionLogin = ({ navigation }) => {
 
-  // useEffect(()=>{
-  //   const getToken = async () => {
-  //     const token = await AsyncStorage.getItem('token');
-  //     if(token) {
-  //       navigation.navigate('main-tab')
-  //     }
-  //   }
-
-  //   getToken()
-
-  // },[])
-
   return (
     <ImageBackground source={require('../../assets/option-background.png')} style={styles.container} resizeMode='cover'>
       <View style={styles.innerContainer}>
         <WhiteLogo />
 
-        <Text style={{ fontWeight: 700, fontSize: 34, color: '#FFFFFF' }}>Temukan developer berbakat & terbaik di berbagai bidang keahlian</Text>
+        <Text style={{ fontWeight: 700, fontSize: 34, color: '#FFFFFF' }}>Discover talented developers across various fields of expertise.</Text>
 
         <View style={styles.actionContainer}>
-          <Button variant='primary-yellow' onPress={() => navigation.navigate('worker-login')} text='Masuk sebagai pekerja' />
+          <Button variant='primary-yellow' onPress={() => navigation.navigate('worker-login')} text='Login as Worker' />
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}>
             <View style={{ flex: 1, height: 1, backgroundColor: '#FFFFFF' }} />
-            <Text style={{ fontWeight: 600, fontSize: 14, color: '#FFFFFF' }}>atau</Text>
+            <Text style={{ fontWeight: 600, fontSize: 14, color: '#FFFFFF' }}>or</Text>
             <View style={{ flex: 1, height: 1, backgroundColor: '#FFFFFF' }} />
           </View>
-          <Button variant='secondary-yellow' onPress={() => navigation.navigate('recruiter-login')} text='Masuk sebagai perekrut' />
+          <Button variant='secondary-yellow' onPress={() => navigation.navigate('recruiter-login')} text='Login as Recruiter' />
         </View>
       </View>
       <Toast />

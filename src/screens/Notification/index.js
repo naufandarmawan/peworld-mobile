@@ -8,12 +8,12 @@ const Notification = ({navigation}) => {
     <View style={{ flex:1, backgroundColor: '#F6F7F8', padding:30}}>
       <View style={{ flexDirection: 'row', alignItems:'center'}}>
         <BlackBack onPress={() => navigation.navigate('home')} />
-        <Text style={{ flex: 1, fontWeight: 600, fontSize: 18, color: '#1F2A36', textAlign: 'center' }}>Notifikasi</Text>
+        <Text style={{ flex: 1, fontWeight: 600, fontSize: 18, color: '#1F2A36', textAlign: 'center' }}>Notifications</Text>
         <View style={{ width: 32, height: 32 }} />
       </View>
       <View style={{ flex: 1, alignItems:'center', justifyContent:'center', gap: 20 }}>
         <NotificationEmpty />
-        <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36', textAlign: 'center' }}>Belum ada notifikasi</Text>
+        <Text style={{ fontWeight: 400, fontSize: 14, color: '#1F2A36', textAlign: 'center' }}>No notifications yet</Text>
       </View>
     </View>
   )

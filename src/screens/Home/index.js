@@ -108,7 +108,7 @@ const Home = ({ navigation }) => {
             <ImageBackground source={require('../../assets/home-background.png')} style={{ paddingTop: 80, paddingBottom: 32, paddingHorizontal: 16, flexDirection: 'row', justifyContent: 'space-between', borderBottomRightRadius: 24, }} resizeMode='cover'>
                 <View style={{ gap: 8 }}>
                     <Text style={{ fontWeight: 500, fontSize: 16, color: '#FFFFFF' }}>{formattedDate}</Text>
-                    <Text style={{ fontWeight: 500, fontSize: 26, color: '#FFFFFF' }}>Hai, {myProfile.name}!</Text>
+                    <Text style={{ fontWeight: 500, fontSize: 26, color: '#FFFFFF' }}>Hi, {myProfile.name}!</Text>
                 </View>
                 <TouchableOpacity onPress={() => navigation.navigate(`notification`)}>
                     <Bell />
@@ -121,7 +121,7 @@ const Home = ({ navigation }) => {
                     keyExtractor={(item, index) => `${item.id}_${index}`}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => navigation.navigate(`worker-profile`, { id: item.id })} style={styles.card}>
-                            {item.photo ? <Image source={{ uri: item.photo }} style={styles.cardImage} /> : <View style={{ width: 60, height: 60, borderRadius: 60, backgroundColor: '#9EA0A5' }} />}
+                            {item.photo ? <Image source={{ uri: item.photo }} style={styles.cardImage} /> : <Image source={require('../../assets/user-thumbnail.jpg')} style={styles.cardImage} />}
                             <View style={{ gap: 4 }}>
                                 {item.name && <Text style={styles.cardName}>{item.name}</Text>}
                                 {item.position && <Text style={styles.cardJob}>{item.position}</Text>}

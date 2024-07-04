@@ -56,40 +56,40 @@ const WorkerRegister = ({ navigation }) => {
       <View style={styles.innerContainer}>
         <View style={styles.flexColumn}>
           <PurpleLogo />
-          <FormContainer formTitle='Signup' formDescription='Lorom ipsum dolor si amet uegas anet.'>
+          <FormContainer formTitle='Signup' formDescription='Access the latest career opportunities and expand your reach globally.'>
             <View style={styles.inputContainer}>
               <Input
                 value={form.email}
                 onChangeText={value => setForm({ ...form, email: value })}
                 label="Email"
-                placeholder="Masukan alamat email"
+                placeholder="Enter your email address"
               />
               <Input
                 value={form.password}
                 onChangeText={value => setForm({ ...form, password: value })}
                 secureTextEntry={true}
                 label="Password"
-                placeholder="Masukan kata sandi"
+                placeholder="Enter your password"
               />
               <Input
                 value={form.name}
                 onChangeText={value => setForm({ ...form, name: value })}
-                label="Name"
-                placeholder="Masukan nama panjang"
+                label="Full Name"
+                placeholder="Enter your full name"
               />
               <Input
                 value={form.phone}
                 onChangeText={value => setForm({ ...form, phone: value })}
-                label="Phone"
-                placeholder="Masukan no handphone"
+                label="Phone Number"
+                placeholder="Enter your phone number"
               />
             </View>
             <View style={styles.actionContainer}>
-              <Button variant='primary-yellow' onPress={handleRegister} text='Daftar' />
+              <Button variant='primary-yellow' onPress={handleRegister} text='Register' />
               <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
-                <Text style={styles.textCenter}>Anda sudah punya akun?</Text>
+                <Text style={styles.textCenter}>Already have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('worker-login')}>
-                  <Text style={styles.linkYellow}>Masuk disini</Text>
+                  <Text style={styles.linkYellow}>Log in here</Text>
                 </TouchableOpacity>
               </View>
             </View>

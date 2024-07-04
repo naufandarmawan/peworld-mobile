@@ -24,7 +24,7 @@ const RecruiterLogin = ({ navigation }) => {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: 'Email dan password harus diisi',
+          text2: 'Email and password are required.',
         });
         return;
       }
@@ -57,32 +57,32 @@ const RecruiterLogin = ({ navigation }) => {
       <View style={styles.innerContainer}>
         <View style={styles.flexColumn}>
           <PurpleLogo />
-          <FormContainer formTitle='Login' formDescription='Lorom ipsum dolor si amet uegas anet.'>
+          <FormContainer formTitle='Login' formDescription='Facilitating efficient recruitment processes for businesses globally.'>
             <View style={styles.inputContainer}>
               <Input
                 value={form.email}
                 onChangeText={value => setForm({ ...form, email: value })}
                 label="Email"
-                placeholder="Masukan alamat email"
+                placeholder="Enter email address"
               />
               <Input
                 value={form.password}
                 onChangeText={value => setForm({ ...form, password: value })}
                 secureTextEntry={true}
                 label="Password"
-                placeholder="Masukan kata sandi"
+                placeholder="Enter password"
               />
             </View>
             <View style={styles.actionContainer}>
               <TouchableOpacity onPress={() => navigation.navigate('request-forgot-password')}>
-                <Text style={styles.link}>Lupa kata sandi?</Text>
+                <Text style={styles.link}>Forgot password?</Text>
               </TouchableOpacity>
-              <Button variant='primary-yellow' onPress={handleLogin} text='Masuk' />
-              <Button variant='secondary-yellow' onPress={() => navigation.navigate('worker-login')} text='Masuk sebagai Worker' />
+              <Button variant='primary-yellow' onPress={handleLogin} text='Login' />
+              <Button variant='secondary-yellow' onPress={() => navigation.navigate('worker-login')} text='Login as Worker' />
               <View style={{ flexDirection: 'row', gap: 4, justifyContent: 'center' }}>
-                <Text style={styles.textCenter}>Anda belum punya akun?</Text>
+                <Text style={styles.textCenter}>Don't have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('recruiter-register')}>
-                  <Text style={styles.linkYellow}>Daftar sebagai recruiter</Text>
+                  <Text style={styles.linkYellow}>Register as recruiter</Text>
                 </TouchableOpacity>
               </View>
             </View>

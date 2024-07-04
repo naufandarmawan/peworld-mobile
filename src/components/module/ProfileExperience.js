@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import Toast from 'react-native-toast-message'
 import api from '../../configs/api'
+import CompanyLogo from '../../assets/company-logo2.svg'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setExperience } from '../../configs/redux/reducers/experienceReducer'
@@ -117,46 +118,47 @@ const ProfileExperience = () => {
 
     return (
         <View style={{ backgroundColor: '#FFFFFF', padding: 30, borderRadius: 10, gap: 20 }}>
-            <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#1F2A36', marginBottom: 20, }}>Pengalaman Kerja</Text>
+            <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#1F2A36', marginBottom: 20, }}>Work Experience</Text>
             <View style={{ gap: 10 }}>
                 <Input
                     value={experienceForm.position}
                     onChangeText={value => setExperienceForm({ ...experienceForm, position: value })}
-                    label="Posisi"
+                    label="Position"
                     placeholder="Web Developer"
                 />
                 <Input
                     value={experienceForm.company}
                     onChangeText={value => setExperienceForm({ ...experienceForm, company: value })}
-                    label="Nama perusahaan"
+                    label="Company"
                     placeholder="PT Harus bisa"
                 />
                 <Input
                     value={experienceForm.start_date}
                     onChangeText={value => setExperienceForm({ ...experienceForm, start_date: value })}
-                    label="Tanggal mulai"
+                    label="Start Date"
                     placeholder="2022-01-15"
                 />
                 <Input
                     value={experienceForm.end_date}
                     onChangeText={value => setExperienceForm({ ...experienceForm, end_date: value })}
-                    label="Tanggal berakhir"
+                    label="End Date"
                     placeholder="2022-06-30"
                 />
                 <Input
                     value={experienceForm.description}
                     onChangeText={value => setExperienceForm({ ...experienceForm, description: value })}
-                    label="Deskripsi singkat"
-                    placeholder="Deskripsikan pekerjaan anda"
+                    label="Brief Description"
+                    placeholder="Describe your job"
                 />
             </View>
             <View style={{ width: '100%', height: 1, backgroundColor: '#E2E5ED' }}></View>
-            <Button text={experienceForm.id ? 'Perbaharui Pengalaman Kerja' : 'Tambah Pengalaman Kerja'} onPress={addMyExperience} />
+            <Button text={experienceForm.id ? 'Update Work Experience' : 'Add Work Experience'} onPress={addMyExperience} />
             <View style={myExperience ? styles.container : styles.hidden}>
                 {myExperience.map((item) => (
                     <View key={item.id} style={styles.item}>
-                        <View style={{ flexDirection: 'row', gap: 20, flex:1 }}>
-                            <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} />
+                        <View style={{ flexDirection: 'row', gap: 20, flex: 1 }}>
+                            <CompanyLogo />
+                            {/* <Image source={require('../../assets/company-logo.png')} style={styles.companyLogo} /> */}
                             <View style={{ gap: 6, flex: 1 }}>
                                 <Text style={{ fontWeight: 600, fontSize: 20, color: '#1F2A36' }}>{item.position}</Text>
                                 <Text style={{ fontWeight: 400, fontSize: 18, color: '#46505C' }}>{item.company}</Text>

@@ -1,79 +1,337 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+<a id="readme-top"></a>
 
-# Getting Started
+<br />
+<div align="center">
+  <a href="https://github.com/naufandarmawan/peworld-mobile">
+    <img src="./src/assets/purple-logo.svg" alt="Logo" width="200" height="auto">
+  </a>
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+  <h3 align="center">Peworld</h3>
+  <p align="center">
+    Job Placement Platform (Mobile Application)
+  </p>
+</div>
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#screenshots">Screeshots</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#development">Development</a></li>
+        <li><a href="#production">Production</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#related-projects">Related Projects</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-```bash
-# using npm
-npm start
 
-# OR using Yarn
-yarn start
-```
 
-## Step 2: Start your Application
+## About The Project
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+In response to industry demands, where 72% of companies rely on mobile applications for recruitment, Peworld Mobile provides an innovative solution to streamline the recruitment process. It allows talent to easily access the latest career opportunities anywhere, while expanding companies' reach globally.
 
-### For Android
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```bash
-# using npm
-npm run android
 
-# OR using Yarn
-yarn android
-```
 
-### For iOS
+### Built With
 
-```bash
-# using npm
-npm run ios
+* React Native
+* Axios 
+* Redux
 
-# OR using Yarn
-yarn ios
-```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
 
-Now that you have successfully run the app, let's modify it.
+## Features
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+* Account creation, 
+* Display and search worker listings, 
+* Worker detail view, 
+* Profile editing, 
+* Password reset, 
+* Push notifications,
+* Skill management, 
+* Portfolio and work experience management, 
+* Profile photo upload directly from the user's camera.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-## Congratulations! :tada:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-You've successfully run and modified your React Native App. :partying_face:
 
-### Now what?
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+## Screenshots
 
-# Troubleshooting
+<table style="width: 100%; border-collapse: collapse;">
+  <colgroup>
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+    <col style="width: 12.5%;">
+  </colgroup>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Splash Screen</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Login Option Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Login Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Register Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Login Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Register Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Reset Password Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Home Page</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-14.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-2.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-6.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-9.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-12.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-15.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-3.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-4.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Notification Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Search Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Inbox Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Worker Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Recruiter Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Details Page</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-11.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-7.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-16.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-1.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-13.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-8.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-10.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="./src/assets/screenshots/screenshot-5.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+  </tr>
+  <!-- Repeat similar rows for more screenshots -->
+</table>
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-# Learn More
 
-To learn more about React Native, take a look at the following resources:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Getting Started
+
+To set up and run the project locally, follow these steps:
+
+### Prerequisites
+
+Before starting, make sure you have npm and the React Native CLI installed. You can install them globally using:
+
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+* React Native CLI
+  ```sh
+  npm install -g react-native-cli
+  ```
+
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/naufandarmawan/peworld-mobile.git
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Set up environment variables:
+   * Create a `.env` file in the root directory of your project.
+   * Add your environment variables to the `.env` file following the structure in the `.env.example` file:
+   ```js
+   API_URL = 'https://your-api-url.com/'
+   ONESIGNAL_ID = 'your-onesignal-id'
+   ```
+   * Replace https://your-api-url.com/ and your-onesignal-id with your actual API URL and OneSignal ID.
+
+### Development
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+5. Run the app on an Android device or emulator:
+   ```sh
+   npm run android
+   ```
+
+### Production
+
+6. Build the project:
+   ```sh
+   npm run build
+   ```
+7. Start the production server:
+   ```sh
+   npm run start
+   ```
+
+By following these steps, you'll have everything set up to run the project locally on your machine.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Related Projects
+
+Here are some related projects and resources you may find helpful. These include demo links, backend links, and other projects from my portfolio:
+
+* Peworld Mobile App Demo: [APK Release](#)
+* Peworld Backend: [Backend Repository](https://github.com/naufandarmawan/peworld-be)
+* Peworld Web App: [Frontend Repository](https://github.com/naufandarmawan/peworld-fe)
+
+### My Other Portfolios
+
+<table style="width: 100%; border-collapse: collapse;">
+<colgroup>
+    <col style="width: 33.33%;">
+    <col style="width: 33.33%;">
+    <col style="width: 33.33%;">
+  </colgroup>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Peworld Web App</th>
+    <!-- <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Peworld Mobile App</th> -->
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">MamaRecipe Web App</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Blanja Web App</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/peworld-fe"><img src="./src/assets/screenshots/other-portfolio-1.png" alt="Screenshot 1" style="max-width: 100%; height: auto;"></a></td>
+    <!-- <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/peworld-mobile"><img src="./src/assets/screenshots/other-portfolio-4.png" alt="Screenshot 2" style="max-width: 100%; height: auto;"></a></td> -->
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/mamarecipe-fe"><img src="./src/assets/screenshots/other-portfolio-2.png" alt="Screenshot 3" style="max-width: 100%; height: auto;"></a></td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/blanja-fe"><img src="./src/assets/screenshots/other-portfolio-3.png" alt="Screenshot 4" style="max-width: 100%; height: auto;"></a></td>
+  </tr>
+  <!-- Repeat similar rows for more screenshots -->
+</table>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+-----
+
+
+<p align="center" id="contact">© Peworld 2024</p>
+<p align="center">
+<a href="https://github.com/naufandarmawan/"> Naufan Darmawan </a> - <a href="mailto:naufandarmawan@gmail.com">naufandarmawan@gmail.com</a> - <a href="https://www.linkedin.com/in/naufandarmawan/">LinkedIn</a>
+</p>

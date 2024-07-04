@@ -86,10 +86,10 @@ const ProfileSkill = () => {
 
     return (
         <View style={styles.profileTabContainer}>
-            <Text style={styles.skillsTitle}>Skill</Text>
+            <Text style={styles.skillsTitle}>Skills</Text>
             <View style={{ gap: 10 }}>
-                <Input label='' placeholder='Masukkan skill' value={skillForm} onChangeText={(value) => setSkillForm(value)} />
-                <Button variant='primary-yellow' text="Tambah" onPress={handleAddSkill} />
+                <Input label='' placeholder='Enter your skill' value={skillForm} onChangeText={(value) => setSkillForm(value)} />
+                <Button variant='primary-yellow' text="Add Skill" onPress={handleAddSkill} />
                 <View style={{ flexDirection: 'column', gap: 10 }}>
                     {mySkills.map((item) => (
                         <View

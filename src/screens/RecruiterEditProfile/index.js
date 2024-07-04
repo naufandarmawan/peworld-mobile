@@ -136,7 +136,7 @@ const RecruiterEditProfile = ({ navigation }) => {
             {form.photo ? <Image source={{ uri: `${form.photo}` }} style={styles.profileImage} /> : <Image source={{ uri: `${myProfile.photo}` }} style={styles.profileImage} />}
             
             <TouchableOpacity onPress={handleChangeImage}>
-              <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Edit</Text>
+              <Text style={{ fontWeight: 600, fontSize: 22, color: '#9EA0A5' }}>Change Photo</Text>
             </TouchableOpacity>
             <View style={styles.profileText}>
               <Text style={{ fontWeight: 600, fontSize: 22, color: '#1F2A36' }}>{myProfile.company}</Text>
@@ -151,66 +151,66 @@ const RecruiterEditProfile = ({ navigation }) => {
         </View>
 
         <View style={{ gap: 20 }}>
-          <Button variant='primary-purple' style={styles.button} onPress={handleSave} text='Simpan' />
-          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('recruiter-profile')} text='Batal' />
+          <Button variant='primary-purple' style={styles.button} onPress={handleSave} text='Save' />
+          <Button variant='secondary-purple' style={styles.button} onPress={() => navigation.navigate('recruiter-profile')} text='Cancel' />
         </View>
 
         <View style={styles.profileTabContainer}>
-          <Text style={styles.skillsTitle}>Data Diri</Text>
+          <Text style={styles.skillsTitle}>Personal Information</Text>
           <View style={{ gap: 10 }}>
             <Input
               value={form.name}
               onChangeText={value => setForm({ ...form, name: value })}
-              label="Nama"
-              placeholder="Masukan Nama"
+              label="Name"
+              placeholder="Enter your name"
             />
-            <Input
+            {/* <Input
               value={form.position}
               onChangeText={value => setForm({ ...form, position: value })}
               label="Position"
-              placeholder="Masukan jabatan"
-            />
+              placeholder="Enter your position"
+            /> */}
             <Input
               value={form.company}
               onChangeText={value => setForm({ ...form, company: value })}
-              label="Nama Perusahaan"
-              placeholder="Masukan bidang perusahaan ex: Financial"
+              label="Company Name"
+              placeholder="Enter company name (e.g., Financial)"
             />
             <Input
               value={form.industry}
               onChangeText={value => setForm({ ...form, industry: value })}
-              label="Bidang"
-              placeholder="Masukan industri"
+              label="Industry"
+              placeholder="Enter industry"
             />
             <Input
               value={form.location}
               onChangeText={value => setForm({ ...form, location: value })}
-              label="Kota"
-              placeholder="Masukan kota"
+              label="Location"
+              placeholder="Enter location"
             />
             <Input
               value={form.description}
               onChangeText={value => setForm({ ...form, description: value })}
-              label="Deskripsi singkat"
-              placeholder="Tuliskan deskripsi singkat"
+              label="Short Description"
+              placeholder="Write a short description"
             />
             <Input
               value={form.phone}
               onChangeText={value => setForm({ ...form, phone: value })}
-              label="Nomor Telepon"
-              placeholder="Masukan nomor telepon"
+              label="Phone Number"
+              placeholder="Enter phone number"
             />
             <Input
               value={form.instagram}
               onChangeText={value => setForm({ ...form, instagram: value })}
               label="Instagram"
-              placeholder="Masukan instagram"
+              placeholder="Enter Instagram username"
             />
             <Input
               value={form.linkedin}
               onChangeText={value => setForm({ ...form, linkedin: value })}
-              label="Linkedin"
-              placeholder="Masukan Linkedin"
+              label="LinkedIn"
+              placeholder="Enter LinkedIn profile"
             />
           </View>
         </View>
