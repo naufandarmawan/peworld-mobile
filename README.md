@@ -83,24 +83,16 @@ In response to industry demands, where 72% of companies rely on mobile applicati
 
 <table style="width: 100%; border-collapse: collapse;">
   <colgroup>
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
-    <col style="width: 12.5%;">
+    <col style="width: 25%;">
+    <col style="width: 25%;">
+    <col style="width: 25%;">
+    <col style="width: 25%;">
   </colgroup>
   <tr>
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Splash Screen</th>
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Login Option Page</th>
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Login Page</th>
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Register Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Login Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Register Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Reset Password Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Home Page</th>
   </tr>
   <tr>
     <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
@@ -123,6 +115,14 @@ In response to industry demands, where 72% of companies rely on mobile applicati
         <img src="./src/assets/screenshots/screenshot-9.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
       </div>
     </td>
+  </tr>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Login Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Register Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Reset Password Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Home Page</th>
+  </tr>
+  <tr>
     <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
       <div style="width: 100%; height: 300px; overflow: hidden;">
         <img src="./src/assets/screenshots/screenshot-12.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
@@ -149,10 +149,6 @@ In response to industry demands, where 72% of companies rely on mobile applicati
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Search Page</th>
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Inbox Page</th>
     <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Profile Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Worker Profile Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Profile Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Recruiter Profile Page</th>
-    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Details Page</th>
   </tr>
   <tr>
     <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
@@ -175,6 +171,14 @@ In response to industry demands, where 72% of companies rely on mobile applicati
         <img src="./src/assets/screenshots/screenshot-1.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
       </div>
     </td>
+  </tr>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Worker Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recruiter Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Recruiter Profile Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Worker Details Page</th>
+  </tr>
+  <tr>
     <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
       <div style="width: 100%; height: 300px; overflow: hidden;">
         <img src="./src/assets/screenshots/screenshot-13.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">

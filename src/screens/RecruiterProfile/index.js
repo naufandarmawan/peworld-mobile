@@ -63,7 +63,7 @@ const RecruiterProfile = ({ navigation }) => {
             {myProfile.email &&
               <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
                 <GreyMail />
-                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.email}</Text>
+                <Text style={{ fontWeight: 400, fontSize: 14, color: '#9EA0A5' }}>{myProfile.email || "kitabisaHR@gmail.com"}</Text>
               </View>
             }
             {myProfile.instagram &&
