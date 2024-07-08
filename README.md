@@ -62,7 +62,7 @@ In response to industry demands, where 72% of companies rely on mobile applicati
 
 
 
-## Features
+### Features
 
 * Account creation, 
 * Display and search worker listings, 
@@ -79,7 +79,7 @@ In response to industry demands, where 72% of companies rely on mobile applicati
 
 
 
-## Screenshots
+### Screenshots
 
 <table style="width: 100%; border-collapse: collapse;">
   <colgroup>
@@ -230,11 +230,15 @@ Before starting, make sure you have npm and the React Native CLI installed. You 
    ```sh
    git clone https://github.com/naufandarmawan/peworld-mobile.git
    ```
-2. Install dependencies:
+2. Navigate into the project directory:
+   ```sh
+   cd peworld-mobile
+   ```
+3. Install dependencies:
    ```sh
    npm install
    ```
-3. Set up environment variables:
+4. Set up environment variables:
    * Create a `.env` file in the root directory of your project.
    * Add your environment variables to the `.env` file following the structure in the `.env.example` file:
    ```js
@@ -245,22 +249,22 @@ Before starting, make sure you have npm and the React Native CLI installed. You 
 
 ### Development
 
-4. Start the development server:
+5. Start the development server:
    ```sh
    npm run dev
    ```
-5. Run the app on an Android device or emulator:
+6. Run the app on an Android device or emulator:
    ```sh
    npm run android
    ```
 
 ### Production
 
-6. Build the project:
+7. Build the project:
    ```sh
    npm run build
    ```
-7. Start the production server:
+8. Start the production server:
    ```sh
    npm run start
    ```
@@ -326,7 +330,7 @@ Here are some related projects and resources you may find helpful. These include
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See <a href="https://github.com/naufandarmawan/peworld-mobile/blob/main/LICENSE">`LICENSE`</a> for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
